@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('events', 'EventController@index');
+Route::apiResource('cursos', 'Api\CursoController');

@@ -15,7 +15,7 @@ class CreateAsistenciasTable extends Migration
     {
         Schema::create('asistencias', function (Blueprint $table) {
             $table->unsignedBigInteger('evento_id');
-            $table->unsignedBigInteger('personal_id');
+            $table->Integer('personal_id');
             $table->boolean('asistencia')->nullable()->default(false);
             $table->boolean('acredita')->nullable()->default(false);
             $table->string('constancia', 20)->nullable();
@@ -25,7 +25,7 @@ class CreateAsistenciasTable extends Migration
             
             $table->foreign('evento_id')->references('id')->on('events');
 
-            $table->foreign('personal_id')->references('id')->on('tblpersonal');
+            $table->foreign('personal_id')->references('IdPersonal')->on('tblpersonal');
            
             $table->primary(['evento_id', 'personal_id']);
         });
