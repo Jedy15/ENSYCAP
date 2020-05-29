@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('events', 'EventController@index');
+Route::middleware('auth:api')->get('events', 'EventController@index');
