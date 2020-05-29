@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('cursos', 'Api\CursoController');
+// Route::apiResource('cursos', 'Api\CursoController');

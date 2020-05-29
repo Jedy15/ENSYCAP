@@ -6,8 +6,21 @@ use App\Curso;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Http\Resources\Curso as CursoResources;
+use App\Http\Resources\CursoCollection;
+
+
+use App\Http\Requests\Curso as CursoRequests;
+
 class CursoController extends Controller
 {
+    protected $curso;
+
+    public function __construct(Curso $curso)
+    {
+        $this->curso = $curso;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +28,11 @@ class CursoController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(
+            new CursoCollection(
+                $this->curso->orderBy('id', 'desc')->get()
+            )
+        );
     }
 
     /**
@@ -24,9 +41,10 @@ class CursoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CursoRequests $request)
     {
-        //
+        $curso = $this->curso->create($request->all());
+        return response()->json(new CursoResources($curso), 201);
     }
 
     /**
@@ -37,7 +55,7 @@ class CursoController extends Controller
      */
     public function show(Curso $curso)
     {
-        return $curso;
+        return response()->json(new CursoResources($curso));
     }
 
     /**
@@ -47,9 +65,12 @@ class CursoController extends Controller
      * @param  \App\Curso  $curso
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Curso $curso)
+    public function update(CursoRequests $request, Curso $curso)
     {
-        //
+        $curso->update($request->all());
+
+        return response()->json(new CursoResources($curso));
+
     }
 
     /**
@@ -60,6 +81,7 @@ class CursoController extends Controller
      */
     public function destroy(Curso $curso)
     {
-        //
+        $curso->delete();
+        return response()->json(null, 204);
     }
 }
