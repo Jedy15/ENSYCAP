@@ -27,6 +27,8 @@ Route::group(['prefix' => 'api'], function () {
         'modalidads'    => 'Api\ModalidadController',
         'ponentes'      => 'Api\PonenteController',
         'events'        => 'Api\EventController',
-        'temas'        => 'Api\TemaController'
+        'temas'         => 'Api\TemaController',
+        'asistencias'   => 'Api\AsistenciaController',
+        'asignados'     => 'Api\AsignadoController'
     ]);
 });
