@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateModalidadsTable extends Migration
+class CreateAsignadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CreateModalidadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('modalidads', function (Blueprint $table) {
+        Schema::create('asignados', function (Blueprint $table) {
             $table->id();
-            $table->string('modalidad', 50);
+            $table->string('CLUES', 11)->collation('latin1_swedish_ci');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->softDeletes();
 
+            $table->foreign('CLUES')->references('CLUES')->on('t_catalogo_clues');
             $table->foreign('user_id')->references('id')->on('users');
+
         });
     }
 
@@ -31,6 +33,6 @@ class CreateModalidadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modalidads');
+        Schema::dropIfExists('asignados');
     }
 }

@@ -22,13 +22,14 @@ class CreateEventsTable extends Migration
             $table->Integer('localidad_id');
             $table->foreign('localidad_id')->references('ID')->on('04_localidad');
 
-            $table->string('CLUES', 11);
+            $table->string('CLUES', 11)->collation('latin1_swedish_ci');
             $table->foreign('CLUES')->references('CLUES')->on('t_catalogo_clues');
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

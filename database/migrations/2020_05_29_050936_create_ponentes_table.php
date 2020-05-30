@@ -17,9 +17,10 @@ class CreatePonentesTable extends Migration
             $table->id();
             $table->string('ponente', 120);
             $table->string('email', 100)->unique();
-            $table->timestamps();
-
             $table->unsignedBigInteger('user_id');
+            $table->timestamps();
+            $table->softDeletes();
+
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

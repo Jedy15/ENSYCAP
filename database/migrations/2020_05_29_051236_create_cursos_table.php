@@ -19,12 +19,14 @@ class CreateCursosTable extends Migration
             $table->smallInteger('duracion')->nullable();
             $table->smallInteger('credito')->nullable();
             $table->string('dirigido', 120)->nullable();
-            $table->timestamps();
 
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-
             $table->unsignedBigInteger('modalidad_id');
+
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('modalidad_id')->references('id')->on('modalidads');
         });
     }

@@ -14,20 +14,16 @@ class CreateAsistenciasTable extends Migration
     public function up()
     {
         Schema::create('asistencias', function (Blueprint $table) {
-            $table->unsignedBigInteger('evento_id');
-            $table->Integer('personal_id');
+            $table->id();
             $table->boolean('asistencia')->nullable()->default(false);
             $table->boolean('acredita')->nullable()->default(false);
-            $table->string('constancia', 20)->nullable();
-            $table->string('libro', 20)->nullable();
+            $table->bigInteger('constancia')->nullable();
+            $table->bigInteger('libro')->nullable();
+            $table->unsignedBigInteger('evento_id');
+            $table->Integer('personal_id');
 
-            $table->timestamps();
-            
             $table->foreign('evento_id')->references('id')->on('events');
-
             $table->foreign('personal_id')->references('IdPersonal')->on('tblpersonal');
-           
-            $table->primary(['evento_id', 'personal_id']);
         });
     }
 
