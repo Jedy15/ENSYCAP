@@ -25,6 +25,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::apiResources([
         'cursos'        => 'Api\CursoController',
         'modalidads'    => 'Api\ModalidadController',
-        'ponentes'      => 'Api\PonenteController'
+        'ponentes'      => 'Api\PonenteController',
+        'events'        => 'Api\EventController'
     ]);
 });

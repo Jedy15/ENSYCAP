@@ -48,9 +48,7 @@ class CursoController extends Controller
     public function update(CursoRequests $request, Curso $curso)
     {
         $curso->update($request->all());
-
         return response()->json(new CursoResources($curso));
-
     }
 
 
