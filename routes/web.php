@@ -22,5 +22,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'api'], function () {
-    Route::apiResource('cursos', 'Api\CursoController');
+    Route::apiResources([
+        'cursos'        => 'Api\CursoController',
+        'modalidads'    => 'Api\ModalidadController'
+    ]);
 });
