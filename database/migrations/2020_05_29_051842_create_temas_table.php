@@ -14,22 +14,20 @@ class CreateTemasTable extends Migration
     public function up()
     {
         Schema::create('temas', function (Blueprint $table) {
-            $table->unsignedBigInteger('evento_id');
+            $table->id();
+
+            $table->unsignedBigInteger('event_id');
 
             $table->unsignedBigInteger('curso_id');
 
             $table->unsignedBigInteger('ponente_id');
 
-            $table->timestamps();
-
-            $table->foreign('evento_id')->references('id')->on('events');
+            $table->foreign('event_id')->references('id')->on('events');
 
             $table->foreign('curso_id')->references('id')->on('cursos');
 
             $table->foreign('ponente_id')->references('id')->on('ponentes');
            
-            $table->primary(['evento_id', 'curso_id', 'ponente_id']);
-
         });
     }
 
