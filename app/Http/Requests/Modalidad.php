@@ -24,8 +24,7 @@ class Modalidad extends FormRequest
     public function rules()
     {
         return [
-            'modalidad'     => 'required|max:50',
-            'user_id'       => 'required',
+            'modalidad' => 'required|max:50'
         ];
     }
 }

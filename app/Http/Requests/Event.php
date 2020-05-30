@@ -25,7 +25,9 @@ class Event extends FormRequest
     {
         return [
             'title'     => 'required|max:120',
-            'user_id'   => 'required',
+            'place'     => 'required|max:150',
+            'start'     => 'required',
+            'end'       => 'required',
         ];
     }
 }

@@ -15,9 +15,10 @@ class Tema extends JsonResource
     public function toArray($request)
     {
         return [
-            'evento'        => $this->event_id,
-            'curso'         => $this->Curso->curso,
-            'ponente'       => $this->Ponente->ponente,
+            'id'        => $this->id,
+            'evento'    => $this->event_id,
+            'curso'     => $this->Curso->curso,
+            'ponente'   => $this->Ponente->ponente,
         ];
     }
 }

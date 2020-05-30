@@ -17,6 +17,7 @@ class Event extends JsonResource
         return [
             'id'            => $this->id,
             'title'         => $this->title,
+            'place'         => $this->place,
             'start'         => $this->start,
             'end'           => $this->end,
             'description'   => $this->description,
@@ -24,6 +25,7 @@ class Event extends JsonResource
             'created_at'    => $this->created_at->format('d-m-Y'),
             'updated_at'    => $this->updated_at->format('d-m-Y'),
             'usuario'       => $this->User->name,
+            'sede'          => $this->Clue->NOMBRE_UNIDAD,
         ];
     }
 }

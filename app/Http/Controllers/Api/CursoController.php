@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Http\Resources\Curso as CursoResources;
 use App\Http\Resources\CursoCollection;
 
-
 use App\Http\Requests\Curso as CursoRequests;
 
 class CursoController extends Controller

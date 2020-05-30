@@ -24,9 +24,8 @@ class Curso extends FormRequest
     public function rules()
     {
         return [
-            'curso'         => 'required',
-            'user_id'       => 'required',
-            'modalidad_id'  => 'required'
+            'curso'      => 'required|max:255',
+            'dirigido'   => 'required|max:120'
         ];
     }
 }

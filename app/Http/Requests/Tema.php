@@ -13,7 +13,7 @@ class Tema extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class Tema extends FormRequest
     public function rules()
     {
         return [
-            //
+            'event_id'   => 'required',
+            'curso_id'   => 'required',
+            'ponente_id' => 'required'
         ];
     }
 }
