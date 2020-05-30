@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Modalidad extends FormRequest
+class Ponente extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class Modalidad extends FormRequest
     public function rules()
     {
         return [
-            'modalidad'     => 'required|max:50',
-            'user_id'       => 'required',
+            'ponente'   => 'required|max:120',
+            'email'     => 'required|email|unique:ponentes|max:100',
+            'user_id'   => 'required'
         ];
     }
 }

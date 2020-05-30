@@ -21,11 +21,7 @@ class CursoController extends Controller
         $this->curso = $curso;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         return response()->json(
@@ -35,36 +31,20 @@ class CursoController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(CursoRequests $request)
     {
         $curso = $this->curso->create($request->all());
         return response()->json(new CursoResources($curso), 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Curso  $curso
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Curso $curso)
     {
         return response()->json(new CursoResources($curso));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Curso  $curso
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(CursoRequests $request, Curso $curso)
     {
         $curso->update($request->all());
@@ -73,12 +53,7 @@ class CursoController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Curso  $curso
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Curso $curso)
     {
         $curso->delete();
