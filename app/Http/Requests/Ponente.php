@@ -25,7 +25,8 @@ class Ponente extends FormRequest
     {
         return [
             'ponente'   => 'required|max:120',
-            'email'     => 'required|email|unique:ponentes|max:100'
+            'email'     => 'required|email|max:100',
+            'user_id'   => 'required'
         ];
     }
 }

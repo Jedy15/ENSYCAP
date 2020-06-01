@@ -6,11 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Modalidad;
 use Illuminate\Http\Request;
 
+use App\Http\Requests\Modalidad as ModalidadRequests;
+
 use App\Http\Resources\Modalidad as ModalidadResources;
 use App\Http\Resources\ModalidadCollection;
 
 
-use App\Http\Requests\Modalidad as ModalidadRequests;
 
 class ModalidadController extends Controller
 {
@@ -40,10 +41,10 @@ class ModalidadController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ModalidadRequests $request)
     {
         $modalidad = $this->modalidad->create($request->all());
-        return response()->json(new ModalidadResources($modalidad), 201);        //
+        return response()->json(new ModalidadResources($modalidad), 201);
     }
 
     /**
@@ -67,16 +68,9 @@ class ModalidadController extends Controller
     public function update(ModalidadRequests $request, Modalidad $modalidad)
     {
         $modalidad->update($request->all());
-
         return response()->json(new ModalidadResources($modalidad));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Modalidad  $modalidad
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Modalidad $modalidad)
     {
         $modalidad->delete();

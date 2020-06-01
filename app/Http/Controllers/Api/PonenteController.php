@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Ponente;
 use Illuminate\Http\Request;
 
+use App\Http\Requests\Ponente as PonenteRequests;
+
 use App\Http\Resources\Ponente as PonenteResources;
 use App\Http\Resources\PonenteCollection;
 
-use App\Http\Requests\Ponente as PonenteRequests;
 
 
 class PonenteController extends Controller
@@ -33,7 +34,7 @@ class PonenteController extends Controller
 
     public function store(PonenteRequests $request)
     {
-        $ponente = $this->ponente->create($request->all());
+        $ponente = $this->ponente->create($request->all()->validated());
         return response()->json(new PonenteResources($ponente), 201);
     }
 
