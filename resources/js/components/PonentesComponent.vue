@@ -1,16 +1,20 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card" 
-                v-for="item in list" 
-                :key="item.id">
-                    <div class="card-header" v-text="item.ponente"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mt-3" 
+            v-for="item in list" 
+            :key="item.id">
 
-                    <div class="card-body">
-                        <p v-text="item.email"></p>
-                        <p v-text="item.usuario"></p>
-                    </div>
+                    <router-link
+                        class="card-header"
+                        :to="{name: 'ponente', params:{id: item.id}}"
+                        v-text="item.ponente">
+                    </router-link>
+
+
+                <div class="card-body">
+                    <p v-text="item.email"></p>
+                    <p v-text="item.usuario"></p>
                 </div>
             </div>
         </div>

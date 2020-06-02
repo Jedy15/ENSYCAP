@@ -13,20 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+Route::get('/{optional?}', function () { 
+    return view('index'); 
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::group(['prefix' => 'api'], function () {
-    Route::apiResource('ponentes', 'Api\PonenteController');
     Route::apiResources([
         'cursos'        => 'Api\CursoController',
         'modalidads'    => 'Api\ModalidadController',
-        // 'ponentes'      => 'Api\PonenteController',
+        'ponentes'      => 'Api\PonenteController',
         'events'        => 'Api\EventController',
         'temas'         => 'Api\TemaController',
         'asistencias'   => 'Api\AsistenciaController',
