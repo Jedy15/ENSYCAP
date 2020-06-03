@@ -2,7 +2,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-Vue.component('app', require('./components/AppComponent.vue').default);
+Vue.component('app', require('./layout/AppComponent.vue').default);
+Vue.component('index', require('./layout/IndexComponent.vue').default);
 Vue.component('ponentes', require('./components/PonentesComponent.vue').default);
 
 import router from './routes'

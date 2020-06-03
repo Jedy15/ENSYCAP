@@ -11,11 +11,8 @@
     </head>
     <body>
         <div id="app">
-
-            <app></app>    
-            
+            <index></index>
         </div>
-
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

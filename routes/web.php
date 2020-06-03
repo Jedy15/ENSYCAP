@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{optional?}', function () { 
+Route::get('/', function () { 
     return view('index'); 
 });
 
@@ -30,3 +30,5 @@ Route::group(['prefix' => 'api'], function () {
         'asignados'     => 'Api\AsignadoController'
     ]);
 });
+
+Route::view('/test', 'home');
