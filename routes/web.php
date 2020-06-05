@@ -15,20 +15,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () { 
     return view('index'); 
-});
+})->name('index');
 
 Auth::routes();
 
-Route::group(['prefix' => 'api'], function () {
-    Route::apiResources([
-        'cursos'        => 'Api\CursoController',
-        'modalidads'    => 'Api\ModalidadController',
-        'ponentes'      => 'Api\PonenteController',
-        'events'        => 'Api\EventController',
-        'temas'         => 'Api\TemaController',
-        'asistencias'   => 'Api\AsistenciaController',
-        'asignados'     => 'Api\AsignadoController'
-    ]);
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['prefix' => 'api'], function () {
+        Route::apiResources([
+            'cursos'        => 'Api\CursoController',
+            'modalidads'    => 'Api\ModalidadController',
+            'ponentes'      => 'Api\PonenteController',
+            'events'        => 'Api\EventController',
+            'temas'         => 'Api\TemaController',
+            'asistencias'   => 'Api\AsistenciaController',
+            'asignados'     => 'Api\AsignadoController'
+        ]);
+    });
+
+    Route::view('/home', 'home')->name('home');
 });
 
-Route::view('/test', 'home');
