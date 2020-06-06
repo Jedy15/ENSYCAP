@@ -32,6 +32,9 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
     });
 
-    Route::view('/home', 'home')->name('home');
+    Route::group(['prefix' => 'app'], function () {
+        Route::view('inicio', 'layouts/app')->name('home');
+    });
+
 });
 

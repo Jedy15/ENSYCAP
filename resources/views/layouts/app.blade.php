@@ -31,8 +31,7 @@
     </head>
     <body data-background-color="bg3">
         <div id="app">
-            <!-- <app></app> -->
-            @yield('content');
+            <app @auth :user="{{ Auth::user() }}" @endauth></app>
         </div>
 
         <!-- Scripts -->

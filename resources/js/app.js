@@ -2,10 +2,12 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+//Vista de Aplicacion
 Vue.component('app', require('./layout/AppComponent.vue').default);
-Vue.component('index', require('./layout/IndexComponent.vue').default);
+
+//Componentes
 Vue.component('ponentes', require('./components/PonentesComponent.vue').default);
-Vue.component('login', require('./components/LoginComponent.vue').default);
+Vue.component('calendar', require('./components/CalendarComponent.vue').default);
 
 import router from './routes'
 
