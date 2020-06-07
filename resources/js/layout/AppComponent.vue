@@ -1,13 +1,11 @@
 <template>
-    <div class="wrapper overlay-sidebar">
-
+    <div class="wrapper sidebar_minimize">
         <div class="main-header">
 			<!-- Logo Header -->
 			<div class="logo-header" data-background-color="purple2">
-				
-				<a href="#" class="logo">
-					<img src="http://ensycap.test/theme/img/logo.svg" alt="navbar brand" class="navbar-brand">
-				</a>
+				<router-link :to="{name:'agenda'}" class="logo" style="color: white;">
+					ENSYCAP
+				</router-link>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
 						<i class="icon-menu"></i>
@@ -15,7 +13,7 @@
 				</button>
 				<button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
 				<div class="nav-toggle">
-					<button class="btn btn-toggle sidenav-overlay-toggler">
+					<button class="btn btn-toggle toggle-sidebar">
 						<i class="icon-menu"></i>
 					</button>
 				</div>
@@ -23,8 +21,7 @@
 			<!-- End Logo Header -->
 
 			<!-- Navbar Header -->
-			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="purple2">
-				
+			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="purple2">				
 				<div class="container-fluid">
 					<div class="collapse" id="search-nav">
 						<form class="navbar-left navbar-form nav-search mr-md-3">
@@ -263,47 +260,12 @@
 		<div class="sidebar sidebar-style-2" data-background-color="dark2">			
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
-					<div class="user">
-						<div class="avatar-sm float-left mr-2">
-							<img src="http://ensycap.test/theme/img/avatar.png" alt="..." class="avatar-img rounded-circle">
-						</div>
-						<div class="info">
-							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-								<span>
-									{{ user.name }}
-									<span class="user-level"></span>
-									<span class="caret"></span>
-								</span>
-							</a>
-							<div class="clearfix"></div>
-
-							<div class="collapse in" id="collapseExample">
-								<ul class="nav">
-									<li>
-										<a href="#profile">
-											<span class="link-collapse">Mi Perfil</span>
-										</a>
-									</li>
-									<li>
-										<a href="#edit">
-											<span class="link-collapse">Editar Perfil</span>
-										</a>
-									</li>
-									<!-- <li>
-										<a href="#settings">
-											<span class="link-collapse">Settings</span>
-										</a>
-									</li> -->
-								</ul>
-							</div>
-						</div>
-					</div>
 					<ul class="nav nav-primary">
-						<li class="nav-item active">
-							<a href="">
+						<li class="nav-item">
+							<router-link :to="{name:'agenda'}">
 								<i class="fas fa-home"></i>
 								<p>Agenda</p>
-							</a>
+							</router-link>
 						</li>
 						<li class="nav-section">
 							<span class="sidebar-mini-icon">
@@ -312,27 +274,11 @@
 							<h4 class="text-section">Personal</h4>
 						</li>
 						<li class="nav-item">
-							<a data-toggle="collapse" href="#plantilla">
+							<router-link :to="{name:'personal'}">
 								<i class="fas flaticon-users"></i>
 								<p>Plantilla</p>
-								<span class="caret"></span>
-							</a>
-							<div class="collapse" id="plantilla">
-								<ul class="nav nav-collapse">
-									<li>
-										<a href="">
-											<span class="sub-item">Personal</span>
-										</a>
-									</li>
-									<li>
-										<a href="">
-											<span class="sub-item">Kardex</span>
-										</a>
-									</li>
-								</ul>
-							</div>
+							</router-link>
 						</li>
-
 						<li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="fa flaticon-settings"></i>
@@ -340,7 +286,7 @@
 							<h4 class="text-section">Configuración</h4>
 						</li>
 						<li class="nav-item">
-							<router-link :to="{name: 'ponente', params:{id: 1}}">
+							<router-link :to="{name: 'ponente'}">
 								<i class="fas flaticon-user-5"></i>
 								<p>Ponentes</p>
 							</router-link>
@@ -351,15 +297,32 @@
 		</div>
 		<!-- End Sidebar -->
 
-        <transition name="slide-fade" mode="out-in">
-            <router-view :key="$route.fullPath"></router-view>
-        </transition>
-        
+		<div class="main-panel">
+			<div class="content">
+				<transition name="slide-fade" mode="out-in">
+					<router-view :key="$route.fullPath"></router-view>
+				</transition>
+			</div>
+		</div>
     </div>
 </template>
 
 <script>
-export default {
-   props : ['user']
-}
+	export default {
+		props : ['user'],
+		data: function () {
+			return {
+				URLdomain: window.location.pathname
+			}
+		},
+		computed:{
+			obternerPath: function () {
+				return window.location.pathname
+			}
+		},
+		created: function () {
+		// `this` hace referencia a la instancia vm
+			console.log('dominio es: ' + this.URLdomain)
+		}
+	}
 </script>

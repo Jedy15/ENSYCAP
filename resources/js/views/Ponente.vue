@@ -8,9 +8,7 @@
 
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-12">
-                    <div class="card mb-4 shadow-sm">
-                    </div>
+                <div class="col-lg-3">
                     <div class="card mb-4 shadow-sm">
                         <svg class="bd-placeholder-img card-img-top" width="100%" height="225" 
                         xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" 
@@ -20,17 +18,17 @@
                             <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
                         </svg>
                         <div class="card-body">
-                            <p class="card-text" v-text="item.email"></p>
+                            <p class="card-text"></p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted" v-text="item.created"></small>
+                                <small class="text-muted"></small>
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-4 shadow-sm">
-                    </div>
-                    <hr>
-                    <h2>Otro Ponentes</h2>
-                    <ponentes></ponentes>
+                </div>
+                <div class="col-lg-9">                    
+                    <div class="card mb-8 shadow-sm">
+                        <ponentes></ponentes>
+                    </div>           
                 </div>
             </div>
         </div>

@@ -15921,59 +15921,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user']
+  props: ['user'],
+  data: function data() {
+    return {
+      URLdomain: window.location.pathname
+    };
+  },
+  computed: {
+    obternerPath: function obternerPath() {
+      return window.location.pathname;
+    }
+  },
+  created: function created() {
+    // `this` hace referencia a la instancia vm
+    console.log('dominio es: ' + this.URLdomain);
+  }
 });
 
 /***/ }),
@@ -15987,8 +15950,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -67918,169 +67879,177 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "wrapper overlay-sidebar" },
-    [
-      _c("div", { staticClass: "main-header" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "nav",
-          {
-            staticClass: "navbar navbar-header navbar-expand-lg",
-            attrs: { "data-background-color": "purple2" }
-          },
-          [
-            _c("div", { staticClass: "container-fluid" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c(
-                "ul",
-                {
-                  staticClass:
-                    "navbar-nav topbar-nav ml-md-auto align-items-center"
-                },
-                [
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _vm._m(3),
-                  _vm._v(" "),
-                  _vm._m(4),
-                  _vm._v(" "),
-                  _vm._m(5),
-                  _vm._v(" "),
-                  _c("li", { staticClass: "nav-item dropdown hidden-caret" }, [
-                    _vm._m(6),
-                    _vm._v(" "),
-                    _c(
-                      "ul",
-                      {
-                        staticClass:
-                          "dropdown-menu dropdown-user animated fadeIn"
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "dropdown-user-scroll scrollbar-outer"
-                          },
-                          [
-                            _c("li", [
-                              _c("div", { staticClass: "user-box" }, [
-                                _vm._m(7),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "u-text" }, [
-                                  _c("h4", [_vm._v(_vm._s(_vm.user.name))]),
-                                  _vm._v(" "),
-                                  _c("p", { staticClass: "text-muted" }, [
-                                    _vm._v(_vm._s(_vm.user.email))
-                                  ])
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _vm._m(8)
-                          ]
-                        )
-                      ]
-                    )
-                  ])
-                ]
-              )
-            ])
-          ]
-        )
-      ]),
-      _vm._v(" "),
+  return _c("div", { staticClass: "wrapper sidebar_minimize" }, [
+    _c("div", { staticClass: "main-header" }, [
       _c(
         "div",
         {
-          staticClass: "sidebar sidebar-style-2",
-          attrs: { "data-background-color": "dark2" }
+          staticClass: "logo-header",
+          attrs: { "data-background-color": "purple2" }
         },
         [
           _c(
-            "div",
-            { staticClass: "sidebar-wrapper scrollbar scrollbar-inner" },
-            [
-              _c("div", { staticClass: "sidebar-content" }, [
-                _c("div", { staticClass: "user" }, [
-                  _vm._m(9),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "info" }, [
-                    _c(
-                      "a",
-                      {
-                        attrs: {
-                          "data-toggle": "collapse",
-                          href: "#collapseExample",
-                          "aria-expanded": "true"
-                        }
-                      },
-                      [
-                        _c("span", [
-                          _vm._v(
-                            "\n\t\t\t\t\t\t\t\t\t" +
-                              _vm._s(_vm.user.name) +
-                              "\n\t\t\t\t\t\t\t\t\t"
-                          ),
-                          _c("span", { staticClass: "user-level" }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "caret" })
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "clearfix" }),
-                    _vm._v(" "),
-                    _vm._m(10)
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("ul", { staticClass: "nav nav-primary" }, [
-                  _vm._m(11),
-                  _vm._v(" "),
-                  _vm._m(12),
-                  _vm._v(" "),
-                  _vm._m(13),
-                  _vm._v(" "),
-                  _vm._m(14),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    { staticClass: "nav-item" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          attrs: { to: { name: "ponente", params: { id: 1 } } }
-                        },
-                        [
-                          _c("i", { staticClass: "fas flaticon-user-5" }),
-                          _vm._v(" "),
-                          _c("p", [_vm._v("Ponentes")])
-                        ]
-                      )
-                    ],
-                    1
-                  )
-                ])
-              ])
-            ]
-          )
-        ]
+            "router-link",
+            {
+              staticClass: "logo",
+              staticStyle: { color: "white" },
+              attrs: { to: { name: "agenda" } }
+            },
+            [_vm._v("\n\t\t\t\t\tENSYCAP\n\t\t\t\t")]
+          ),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm._m(2)
+        ],
+        1
       ),
       _vm._v(" "),
       _c(
-        "transition",
-        { attrs: { name: "slide-fade", mode: "out-in" } },
-        [_c("router-view", { key: _vm.$route.fullPath })],
+        "nav",
+        {
+          staticClass: "navbar navbar-header navbar-expand-lg",
+          attrs: { "data-background-color": "purple2" }
+        },
+        [
+          _c("div", { staticClass: "container-fluid" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c(
+              "ul",
+              {
+                staticClass:
+                  "navbar-nav topbar-nav ml-md-auto align-items-center"
+              },
+              [
+                _vm._m(4),
+                _vm._v(" "),
+                _vm._m(5),
+                _vm._v(" "),
+                _vm._m(6),
+                _vm._v(" "),
+                _vm._m(7),
+                _vm._v(" "),
+                _c("li", { staticClass: "nav-item dropdown hidden-caret" }, [
+                  _vm._m(8),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    {
+                      staticClass: "dropdown-menu dropdown-user animated fadeIn"
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "dropdown-user-scroll scrollbar-outer" },
+                        [
+                          _c("li", [
+                            _c("div", { staticClass: "user-box" }, [
+                              _vm._m(9),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "u-text" }, [
+                                _c("h4", [_vm._v(_vm._s(_vm.user.name))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "text-muted" }, [
+                                  _vm._v(_vm._s(_vm.user.email))
+                                ])
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(10)
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              ]
+            )
+          ])
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "sidebar sidebar-style-2",
+        attrs: { "data-background-color": "dark2" }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "sidebar-wrapper scrollbar scrollbar-inner" },
+          [
+            _c("div", { staticClass: "sidebar-content" }, [
+              _c("ul", { staticClass: "nav nav-primary" }, [
+                _c(
+                  "li",
+                  { staticClass: "nav-item" },
+                  [
+                    _c("router-link", { attrs: { to: { name: "agenda" } } }, [
+                      _c("i", { staticClass: "fas fa-home" }),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("Agenda")])
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm._m(11),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  { staticClass: "nav-item" },
+                  [
+                    _c("router-link", { attrs: { to: { name: "personal" } } }, [
+                      _c("i", { staticClass: "fas flaticon-users" }),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("Plantilla")])
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm._m(12),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  { staticClass: "nav-item" },
+                  [
+                    _c("router-link", { attrs: { to: { name: "ponente" } } }, [
+                      _c("i", { staticClass: "fas flaticon-user-5" }),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("Ponentes")])
+                    ])
+                  ],
+                  1
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "main-panel" }, [
+      _c(
+        "div",
+        { staticClass: "content" },
+        [
+          _c(
+            "transition",
+            { attrs: { name: "slide-fade", mode: "out-in" } },
+            [_c("router-view", { key: _vm.$route.fullPath })],
+            1
+          )
+        ],
         1
       )
-    ],
-    1
-  )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -68088,54 +68057,41 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "div",
+      "button",
       {
-        staticClass: "logo-header",
-        attrs: { "data-background-color": "purple2" }
+        staticClass: "navbar-toggler sidenav-toggler ml-auto",
+        attrs: {
+          type: "button",
+          "data-toggle": "collapse",
+          "data-target": "collapse",
+          "aria-expanded": "false",
+          "aria-label": "Toggle navigation"
+        }
       },
       [
-        _c("a", { staticClass: "logo", attrs: { href: "#" } }, [
-          _c("img", {
-            staticClass: "navbar-brand",
-            attrs: {
-              src: "http://ensycap.test/theme/img/logo.svg",
-              alt: "navbar brand"
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "navbar-toggler sidenav-toggler ml-auto",
-            attrs: {
-              type: "button",
-              "data-toggle": "collapse",
-              "data-target": "collapse",
-              "aria-expanded": "false",
-              "aria-label": "Toggle navigation"
-            }
-          },
-          [
-            _c("span", { staticClass: "navbar-toggler-icon" }, [
-              _c("i", { staticClass: "icon-menu" })
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("button", { staticClass: "topbar-toggler more" }, [
-          _c("i", { staticClass: "icon-options-vertical" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "nav-toggle" }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-toggle sidenav-overlay-toggler" },
-            [_c("i", { staticClass: "icon-menu" })]
-          )
+        _c("span", { staticClass: "navbar-toggler-icon" }, [
+          _c("i", { staticClass: "icon-menu" })
         ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "topbar-toggler more" }, [
+      _c("i", { staticClass: "icon-options-vertical" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "nav-toggle" }, [
+      _c("button", { staticClass: "btn btn-toggle toggle-sidebar" }, [
+        _c("i", { staticClass: "icon-menu" })
+      ])
+    ])
   },
   function() {
     var _vm = this
@@ -68670,93 +68626,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "avatar-sm float-left mr-2" }, [
-      _c("img", {
-        staticClass: "avatar-img rounded-circle",
-        attrs: { src: "http://ensycap.test/theme/img/avatar.png", alt: "..." }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "collapse in", attrs: { id: "collapseExample" } },
-      [
-        _c("ul", { staticClass: "nav" }, [
-          _c("li", [
-            _c("a", { attrs: { href: "#profile" } }, [
-              _c("span", { staticClass: "link-collapse" }, [
-                _vm._v("Mi Perfil")
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#edit" } }, [
-              _c("span", { staticClass: "link-collapse" }, [
-                _vm._v("Editar Perfil")
-              ])
-            ])
-          ])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item active" }, [
-      _c("a", { attrs: { href: "" } }, [
-        _c("i", { staticClass: "fas fa-home" }),
-        _vm._v(" "),
-        _c("p", [_vm._v("Agenda")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("li", { staticClass: "nav-section" }, [
       _c("span", { staticClass: "sidebar-mini-icon" }, [
         _c("i", { staticClass: "fa fa-ellipsis-h" })
       ]),
       _vm._v(" "),
       _c("h4", { staticClass: "text-section" }, [_vm._v("Personal")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c("a", { attrs: { "data-toggle": "collapse", href: "#plantilla" } }, [
-        _c("i", { staticClass: "fas flaticon-users" }),
-        _vm._v(" "),
-        _c("p", [_vm._v("Plantilla")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "caret" })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "collapse", attrs: { id: "plantilla" } }, [
-        _c("ul", { staticClass: "nav nav-collapse" }, [
-          _c("li", [
-            _c("a", { attrs: { href: "" } }, [
-              _c("span", { staticClass: "sub-item" }, [_vm._v("Personal")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "" } }, [
-              _c("span", { staticClass: "sub-item" }, [_vm._v("Kardex")])
-            ])
-          ])
-        ])
-      ])
     ])
   },
   function() {
@@ -68853,16 +68728,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "main-panel" }, [
-    _c("div", { staticClass: "content" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "page-inner mt--5" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-body" }, [_c("calendar")], 1)
-            ])
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "page-inner mt--5" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [_c("calendar")], 1)
           ])
         ])
       ])
@@ -68935,81 +68808,66 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
-        _c(
-          "div",
-          { staticClass: "col-md-12" },
-          [
-            _c("div", { staticClass: "card mb-4 shadow-sm" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card mb-4 shadow-sm" }, [
-              _c(
-                "svg",
-                {
-                  staticClass: "bd-placeholder-img card-img-top",
-                  attrs: {
-                    width: "100%",
-                    height: "225",
-                    xmlns: "http://www.w3.org/2000/svg",
-                    preserveAspectRatio: "xMidYMid slice",
-                    focusable: "false",
-                    role: "img",
-                    "aria-label": "Placeholder: Thumbnail"
-                  }
-                },
-                [
-                  _c("title", [_vm._v("Placeholder")]),
-                  _vm._v(" "),
-                  _c("rect", {
-                    attrs: { width: "100%", height: "100%", fill: "#55595c" }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "text",
-                    {
-                      attrs: { x: "50%", y: "50%", fill: "#eceeef", dy: ".3em" }
-                    },
-                    [_vm._v("Thumbnail")]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("p", {
-                  staticClass: "card-text",
-                  domProps: { textContent: _vm._s(_vm.item.email) }
+        _c("div", { staticClass: "col-lg-3" }, [
+          _c("div", { staticClass: "card mb-4 shadow-sm" }, [
+            _c(
+              "svg",
+              {
+                staticClass: "bd-placeholder-img card-img-top",
+                attrs: {
+                  width: "100%",
+                  height: "225",
+                  xmlns: "http://www.w3.org/2000/svg",
+                  preserveAspectRatio: "xMidYMid slice",
+                  focusable: "false",
+                  role: "img",
+                  "aria-label": "Placeholder: Thumbnail"
+                }
+              },
+              [
+                _c("title", [_vm._v("Placeholder")]),
+                _vm._v(" "),
+                _c("rect", {
+                  attrs: { width: "100%", height: "100%", fill: "#55595c" }
                 }),
                 _vm._v(" "),
                 _c(
-                  "div",
+                  "text",
                   {
-                    staticClass:
-                      "d-flex justify-content-between align-items-center"
+                    attrs: { x: "50%", y: "50%", fill: "#eceeef", dy: ".3em" }
                   },
-                  [
-                    _c("small", {
-                      staticClass: "text-muted",
-                      domProps: { textContent: _vm._s(_vm.item.created) }
-                    })
-                  ]
+                  [_vm._v("Thumbnail")]
                 )
-              ])
-            ]),
+              ]
+            ),
             _vm._v(" "),
-            _c("div", { staticClass: "card mb-4 shadow-sm" }),
-            _vm._v(" "),
-            _c("hr"),
-            _vm._v(" "),
-            _c("h2", [_vm._v("Otro Ponentes")]),
-            _vm._v(" "),
-            _c("ponentes")
-          ],
-          1
-        )
+            _vm._m(0)
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-9" }, [
+          _c("div", { staticClass: "card mb-8 shadow-sm" }, [_c("ponentes")], 1)
+        ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body" }, [
+      _c("p", { staticClass: "card-text" }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "d-flex justify-content-between align-items-center" },
+        [_c("small", { staticClass: "text-muted" })]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -84513,14 +84371,17 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: [{
-    path: '/app/inicio',
+    path: '/app/agenda',
     name: 'agenda',
     component: _views_Agenda__WEBPACK_IMPORTED_MODULE_2__["default"]
   }, {
-    path: ':id',
+    path: '/app/ponente',
     name: 'ponente',
-    component: _views_Ponente__WEBPACK_IMPORTED_MODULE_3__["default"],
-    props: true
+    component: _views_Ponente__WEBPACK_IMPORTED_MODULE_3__["default"] // props: true
+
+  }, {
+    path: '/app/plantilla',
+    name: 'personal'
   }, {
     path: '*',
     component: _views_404__WEBPACK_IMPORTED_MODULE_4__["default"]
@@ -84723,8 +84584,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\ensycap-web\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\ensycap-web\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\ensycap\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\ensycap\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

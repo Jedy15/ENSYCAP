@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => 'app'], function () {
-        Route::view('inicio', 'layouts/app')->name('home');
+        Route::view('agenda', 'layouts/app')->name('home');
     });
 
 });
