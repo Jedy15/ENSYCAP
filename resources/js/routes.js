@@ -10,24 +10,24 @@ Vue.use(Router)
 export default new Router({
     routes:[
         {
-            path: '/app/agenda',
+            path: '/',
             name: 'agenda',
             component: agendaC
         },
         {
-            path: '/app/ponente',
+            path: '/ponente',
             name: 'ponente',
             component: ponenteC,
             // props: true
         },
         {
-            path: '/app/plantilla',
+            path: '/plantilla',
             name: 'personal'
         },
         {
             path: '*',
             component: notFoundC
         },        
-    ],
-    mode: 'history'
+    ]
+    // mode: 'history'
 })

@@ -245,7 +245,9 @@
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#">Editar Perfil</a>
 										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#">Salir</a>
+										<form @submit="logout">
+											<button type="submit" class="btn btn-block btn-sm btn-danger">Salir</button>
+										</form>
 									</li>
 								</div>
 							</ul>
@@ -308,21 +310,21 @@
 </template>
 
 <script>
+	// console.log(user);
+
 	export default {
 		props : ['user'],
-		data: function () {
-			return {
-				URLdomain: window.location.pathname
+		methods:{
+			logout: function(e){
+				axios.post('/logout')
+				.then(response => {
+					window.location.replace('/');
+				})
+				.catch(error => {
+					console.log(error);
+				});
+				e.preventDefault();
 			}
-		},
-		computed:{
-			obternerPath: function () {
-				return window.location.pathname
-			}
-		},
-		created: function () {
-		// `this` hace referencia a la instancia vm
-			console.log('dominio es: ' + this.URLdomain)
 		}
 	}
 </script>

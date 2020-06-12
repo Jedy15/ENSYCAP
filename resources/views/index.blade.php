@@ -23,7 +23,7 @@
                     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">Inico <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Acerca de</a>
@@ -76,7 +76,7 @@
                 <div class="card mb-12">
                     <div class="row">                
                         <div class="col-md-6">
-                            <img src="http://ensycap.test/theme/img/Login.png" class="card-img" alt="...">
+                            <img src="{{ asset('theme/img/Login.png') }}" class="card-img" alt="...">
                         </div>
 
                         <div class="col-md-6">

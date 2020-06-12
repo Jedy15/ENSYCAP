@@ -32,9 +32,12 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
     });
 
-    Route::group(['prefix' => 'app'], function () {
-        Route::view('agenda', 'layouts/app')->name('home');
-    });
+    // Route::group(['prefix' => 'app'], function () {
+    // Route::view('agenda', 'layouts/app')->name('home');
+    // });
+    Route::get('/app/{optional?}', function () {
+        return view('layouts/app');
+    })->name('home');
 
 });
 

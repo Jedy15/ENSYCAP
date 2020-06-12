@@ -34,7 +34,7 @@ class PonenteController extends Controller
 
     public function store(PonenteRequests $request)
     {
-        $ponente = $this->ponente->create($request->all()->validated());
+        $ponente = $this->ponente->create($request->all());
         return response()->json(new PonenteResources($ponente), 201);
     }
 
