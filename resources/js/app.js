@@ -9,7 +9,9 @@ Vue.component('app', require('./layout/AppComponent.vue').default);
 Vue.component('ponentes', require('./components/PonentesComponent.vue').default);
 Vue.component('calendar', require('./components/CalendarComponent.vue').default);
 
-import router from './routes'
+import router from './routes';
+import swal from 'sweetalert';
+
 
 const app = new Vue({
     el: '#app',

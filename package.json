@@ -33,6 +33,7 @@
         "@fullcalendar/timegrid": "^4.4.2",
         "@fullcalendar/vue": "^4.4.2",
         "datatables.net": "^1.10.21",
-        "datatables.net-bs4": "^1.10.21"
+        "datatables.net-bs4": "^1.10.21",
+        "sweetalert": "^2.1.2"
     }
 }

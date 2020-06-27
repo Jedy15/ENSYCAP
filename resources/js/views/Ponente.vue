@@ -6,39 +6,35 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="card">
-                        <form v-on:submit.prevent="crearPonente">
+                        <form id="formPonente" v-on:submit.prevent="crearPonente">
                             <div class="card-header">
-                                Nuevo Ponente
+                                Crear Ponente
                             </div>
                             <div class="card-body">
-                                    <p v-if="errores.length">
-                                        <b>Por favor, corrija el(los) siguiente(s) error(es):</b>
-                                        <ul>
-                                            <li v-for="error in errores">{{ error }}</li>
-                                        </ul>
-                                    </p>
-
-                                    <div class="form-group">
-                                        <label for="">Ponente</label>
-                                        <div class="input-icon">
-                                            <span class="input-icon-addon">
-                                                <i class="fa fa-user"></i>
-                                            </span>
-                                            <input type="text" class="form-control" id="ponente" name="ponente" placeholder="Ingrese Nombre" 
-                                            v-model="ponente">
-                                        </div>
+                                <div class="form-group">
+                                    <label for="">Ponente</label>
+                                    <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                                        <input type="text" required class="form-control" id="ponente" name="ponente" placeholder="Ingrese Nombre" 
+                                        v-model="ponente">
                                     </div>
+                                    <div class="invalid-feedback" id="errorPonente"></div>                                  
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="">Correo Electrónico</label>
-                                        <div class="input-icon">
-                                            <span class="input-icon-addon">
-                                                <i class="fa fa-envelope"></i>
-                                            </span>
-                                            <input type="text" class="form-control" id="email" name="email" placeholder="Ingrese Correo"
-                                            v-model="email">
-                                        </div>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="">Correo Electrónico</label>
+                                    <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fa fa-envelope"></i>
+                                        </span>
+                                        <input type="text" required class="form-control" id="email" name="email" placeholder="Ingrese Correo"
+                                        v-model="email">                                        
+                                    </div>  
+                                    <div class="invalid-feedback" id="errorEmail"></div>                              
+                                </div>
+
                             </div>
                             <div class="card-footer text-muted">
                                 <button type="submit" class="btn btn-primary btn-block">Guardar</button>
@@ -60,13 +56,17 @@
             return{
                 ponente:    '',
                 email:      '',
-                idUsuario:  '1',
-                errores:[]
+                idUsuario:  '1'
             }
         },
         methods:{
             crearPonente: function() {
-                let url = '/api/ponentes/';
+
+                $('.has-error').removeClass('has-error');
+                $('.is-invalid').removeClass('is-invalid');
+                $('.invalid-feedback').val();
+
+                let url = '/api/ponentes';
                 const datos = {
                     user_id:    this.idUsuario,
                     ponente:    this.ponente,
@@ -76,34 +76,28 @@
                 axios.post(url, datos)
                 .then(response => {
                     this.RecargarPonentes();
-                }).catch(e => {                    
+                    swal("Ponente Registrado", "El ponente "+this.ponente+", ha sido registrado Correctamente", "success");
+                    $('#formPonente').trigger("reset");
+                }).catch(e => {          
+                    swal("Error","No es posible registrar ponente","error");
                     let data = e.response.data.errors;
                     if(data.ponente){
-                        this.errores.push(data.ponente[0]); 
-                        this.inputError(ponente);
+                        $('#ponente').addClass('is-invalid');
+                        $('#errorPonente').html(data.ponente[0]);
+                        $("#ponente").parent('.input-icon').addClass('is-invalid');
+                        $("#ponente").parents('.form-group').addClass('has-error');
                     }
                     if(data.email){
-                        this.errores.push(data.email[0]);
-                        this.inputError(email);
-                    }
-                    
-                    console.log(e.response.message);
+                        $('#email').addClass('is-invalid');
+                        $('#errorEmail').html(data.email[0]);
+                        $("#email").parent('.input-icon').addClass('is-invalid');
+                        $("#email").parents('.form-group').addClass('has-error');
+                    }                    
+                    console.log(e);
                 });
-            },
-            inputError:function(input) {
-                $(input).addClass('is-invalid');
-                let grupo = $(input).parents(".form-group");                
-                $(grupo).addClass('has-error');
             },
             RecargarPonentes: function() {
                 $('#myTable').DataTable().ajax.reload();
-            },
-            getPonente: function () {
-                let url = '/api/ponentes/' + this.id;
-                axios.get(url)
-                .then(response=>{
-                    this.item = response.data
-                });
             }
         }
     }
