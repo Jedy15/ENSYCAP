@@ -15627,9 +15627,15 @@ __webpack_require__.r(__webpack_exports__);
           dangerMode: true
         }).then(function (willDelete) {
           if (willDelete) {
-            eliminarPonente();
-          } else {
-            swal("Your imaginary file is safe!");
+            var url = '/api/ponentes/' + data.id;
+            axios["delete"](url).then(function (res) {
+              swal("Poof! Ha eliminado al Ponente " + data.ponente + "!", {
+                icon: "success"
+              });
+              $('#myTable').DataTable().ajax.reload();
+            })["catch"](function (err) {
+              console.error(err);
+            });
           }
         });
       });
@@ -15707,11 +15713,6 @@ __webpack_require__.r(__webpack_exports__);
           console.log(errores);
         }
       });
-    },
-    eliminarPonente: function eliminarPonente() {
-      swal("Poof! Your imaginary file has been deleted!", {
-        icon: "success"
-      }); // alert('estoy en eliminar');
     }
   }
 });
@@ -84979,8 +84980,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/html/ensycap/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/html/ensycap/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\ensycap\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\ensycap\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

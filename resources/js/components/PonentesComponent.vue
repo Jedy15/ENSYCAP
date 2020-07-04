@@ -92,11 +92,19 @@
                         dangerMode: true,
                         })
                         .then((willDelete) => {
-                        if (willDelete) {
-                            eliminarPonente()                            
-                        } else {
-                            swal("Your imaginary file is safe!");
-                        }
+                            if (willDelete) { 
+                                let url = '/api/ponentes/'+data.id;
+                                axios.delete(url)
+                                .then(res => {
+                                    swal("Poof! Ha eliminado al Ponente "+data.ponente+"!", {
+                                            icon: "success",
+                                        });
+                                    $('#myTable').DataTable().ajax.reload();
+                                })
+                                .catch(err => {
+                                    console.error(err); 
+                                })                 
+                            }
                         });
                 });
             }
@@ -166,15 +174,7 @@
                     }
                 });
 
-            },
-
-            eliminarPonente: function(){
-                swal("Poof! Your imaginary file has been deleted!", {
-                            icon: "success",
-                            });
-                // alert('estoy en eliminar');
-            }
-            
+            }            
         }
     }
 </script>

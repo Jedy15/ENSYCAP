@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ponente extends Model
 {
@@ -14,4 +15,6 @@ class Ponente extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    use SoftDeletes;
 }
