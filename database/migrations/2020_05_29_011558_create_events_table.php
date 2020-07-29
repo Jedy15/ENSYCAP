@@ -16,10 +16,11 @@ class CreateEventsTable extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('place', 150)->nullable();
+            $table->string('place', 150);
             $table->dateTime('start');
-            $table->dateTime('end');
-            $table->text('description')->nullable();
+            $table->dateTime('end')->nullable()->default(null);
+            $table->text('description')->nullable()->default(null);
+            $table->string('color', 45)->nullable()->default('rgb(2, 117, 216)');
 
             $table->string('CLUES', 11)->collation('latin1_swedish_ci');
             $table->foreign('CLUES')->references('CLUES')->on('t_catalogo_clues');

@@ -27,7 +27,8 @@ class Event extends FormRequest
             'title'     => 'required|max:120',
             'place'     => 'required|max:150',
             'start'     => 'required',
-            'end'       => 'required',
+            'CLUES'     => 'required',
+            // 'end'       => 'required',
         ];
     }
 }

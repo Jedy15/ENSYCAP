@@ -75,9 +75,11 @@
 
                 axios.post(url, datos)
                 .then(response => {
-                    this.RecargarPonentes();
+                    $('#myTable').DataTable().ajax.reload();
                     swal("Ponente Registrado", "El ponente "+this.ponente+", ha sido registrado Correctamente", "success");
                     $('#formPonente').trigger("reset");
+                    this.ponente = '';
+                    this.email = '';
                 }).catch(e => {          
                     swal("Error","No es posible registrar ponente","error");
                     let data = e.response.data.errors;
@@ -93,11 +95,8 @@
                         $("#email").parent('.input-icon').addClass('is-invalid');
                         $("#email").parents('.form-group').addClass('has-error');
                     }                    
-                    console.log(e);
+                    // console.log(e);
                 });
-            },
-            RecargarPonentes: function() {
-                $('#myTable').DataTable().ajax.reload();
             }
         }
     }

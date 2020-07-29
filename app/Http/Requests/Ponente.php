@@ -24,7 +24,7 @@ class Ponente extends FormRequest
     public function rules()
     {
         return [
-            'ponente'   => 'required|max:120',
+            'ponente'   => 'required|regex:/^[\pL\s\-]+$/u|max:120',
             'email'     => 'required|email|max:100|unique:ponentes,email,'.$this->id,
             'user_id'   => 'required',
         ];
