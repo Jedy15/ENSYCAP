@@ -19,10 +19,10 @@ class CreateAsistenciasTable extends Migration
             $table->boolean('acredita')->nullable()->default(false);
             $table->bigInteger('constancia')->nullable();
             $table->bigInteger('libro')->nullable();
-            $table->unsignedBigInteger('evento_id');
+            $table->unsignedBigInteger('event_id');
             $table->Integer('personal_id');
 
-            $table->foreign('evento_id')->references('id')->on('events');
+            $table->foreign('event_id')->references('id')->on('events');
             $table->foreign('personal_id')->references('IdPersonal')->on('tblpersonal');
         });
     }

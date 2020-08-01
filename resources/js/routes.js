@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import agendaC from './views/Agenda'
-import ponenteC from './views/Ponente'
-import notFoundC from './views/404'
+import agendaC      from './views/Agenda'
+import ponenteC     from './views/Ponente'
+import notFoundC    from './views/404'
+import eventoC      from './views/evento/Evento'
 
 Vue.use(Router)
 
@@ -21,8 +22,15 @@ export default new Router({
             // props: true
         },
         {
+            path: '/evento/:id',
+            name: 'evento',
+            component: eventoC,
+            props: true
+        },
+        {
             path: '/plantilla',
-            name: 'personal'
+            name: 'personal',
+            // component: eventoC
         },
         {
             path: '*',

@@ -200,16 +200,7 @@ export default {
     },
 
     eventClick(info){
-      // $('#modal-addEvent').modal('show');
-      // this.editMode = true;
-
-      // this.evento.start = moment(info.event.start).format("YYYY-MM-DD HH:mm"); //info.startStr.format();
-      // if (!info.event.allDay) {
-      //   this.evento.end = moment(info.event.end).format("YYYY-MM-DD HH:mm");
-      // }
-      // this.evento.title       = info.event.title;
-      // this.evento.description = info.event.description;
-      console.log(info.event);
+      this.$router.push({ name: 'evento', params: { id: info.event.id } })
     },
     select: function(info) {
       this.limpiarEvento();

@@ -15,13 +15,16 @@ class Asistencia extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'         => $this->id,
-            'asistencia' => $this->asistencia,
-            'acredita'   => $this->acredita,
-            'constancia' => $this->constancia,
-            'libro'      => $this->libro,
-            'evento'     => $this->Event,
-            'personal'   => $this->Personal,
+            'id'            => $this->id,
+            'asistencia'    => $this->asistencia,
+            'acredita'      => $this->acredita,
+            'constancia'    => $this->constancia,
+            'libro'         => $this->libro,
+            'personal_id'   => $this->personal_id,
+            'event_id'      => $this->event_id,
+
+            'evento'        => $this->Event->title,
+            'persona'       => $this->persona->NOMBRES.' '.$this->persona->APELLIDOS,
         ];
     }
 }

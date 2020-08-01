@@ -20,7 +20,6 @@
                     <div class="card">
                         <div class="card-body">
                             <calendar></calendar>
-                            <!-- hola mundo -->
                         </div>
                     </div>
                 </div>

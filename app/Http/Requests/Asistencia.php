@@ -24,7 +24,7 @@ class Asistencia extends FormRequest
     public function rules()
     {
         return [
-            'evento_id'     => 'required',
+            'event_id'     => 'required',
             'personal_id'   => 'required',
             'constancia'    => 'unique:asistencias'
         ];
