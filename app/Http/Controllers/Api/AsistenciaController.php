@@ -52,4 +52,18 @@ class AsistenciaController extends Controller
         $asistencia->delete();
         return response()->json(null, 204);
     }
+
+    public function event(Request $request)
+    {
+        return response()->json(
+            // new AsistenciaCollection(
+                $this->asistencia
+                    ->select('NOMBRES', 'APELLIDOS', 'NTarjeta', 'Turno', 'DEPARTAMENTO', 'RAMA', 'NombreRama','asistencias.*')
+                    ->registrados()
+                    ->where('event_id',$request->evento)
+                    ->orderBy('id', 'desc')
+                    ->get()
+            // )
+        );   
+    }
 }

@@ -30,6 +30,11 @@ Route::group(['middleware' => ['auth']], function () {
             'asistencias'   => 'Api\AsistenciaController',
             'asignados'     => 'Api\AsignadoController'
         ]);
+
+        Route::get('personas', 'PersonaController@index');
+        Route::get('asistencias/evento/{evento}', 'Api\AsistenciaController@event')
+            ->name('asistencias.evento')
+            ->where('evento', '[0-9]+');
     });
 
     // Route::group(['prefix' => 'app'], function () {

@@ -23,7 +23,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <ul class="nav nav-pills nav-secondary  nav-pills-no-bd nav-pills-icons justify-content-center" id="pills-tab-with-icon" role="tablist">
+                            <ul class="nav nav-pills nav-success nav-pills-no-bd nav-pills-icons justify-content-center" id="pills-tab-with-icon" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="pills-participantes-tab-icon" data-toggle="pill" href="#pills-participantes-icon" role="tab" aria-controls="pills-participantes-icon" aria-selected="true">
                                         <i class="flaticon-add-user"></i>
@@ -50,14 +50,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row mt--2">
-                <div class="col-xs-12 col-md-6 col-lg-7">
-                    <!-- <participantes></participantes> -->
-                </div>
-                <div class="col-xs-12 col-md-6 col-lg-5">
-                    <temas></temas>
                 </div>
             </div>
         </div>

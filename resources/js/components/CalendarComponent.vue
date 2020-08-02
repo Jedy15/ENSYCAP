@@ -54,20 +54,20 @@
                 <input v-model="evento.title" type="text" id="title"
                     placeholder="Ingrese Nombre de Evento"
                     class="form-control">
-                <small class="form-text text-muted"
+                <h5 class="form-text text-danger"
                   v-if="errors.title"
                   v-html="errors.title"
-                ></small>
+                ></h5>
               </div>
               <div class="form-group">
                 <label for="place">Lugar</label>
                 <input v-model="evento.place" type="text" id="place"
                     placeholder="Ingrese Detalles de Lugar"
                     class="form-control">
-                <small class="form-text text-muted"
+                <h5 class="form-text text-danger"
                   v-if="errors.place"
                   v-html="errors.place"
-                ></small>
+                ></h5>
               </div>
               <div class="form-group">
                 <label for="description">Descripción</label>
