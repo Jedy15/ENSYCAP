@@ -310,8 +310,6 @@
 </template>
 
 <script>
-	// console.log(user);
-
 	export default {
 		props : ['user'],
 		methods:{

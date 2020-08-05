@@ -17274,21 +17274,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       persona: {
+        id: null,
         personal_id: null,
+        asistencia: 0,
         event_id: this.$route.params.id
       },
       nombre: '',
+      update: {
+        success: false,
+        messaje: ''
+      },
       errors: {
         personal_id: null
       },
-      nuevo: false,
-      claseTabla: ''
+      nuevo: false
     };
   },
   mounted: function mounted() {
@@ -17323,7 +17332,7 @@ __webpack_require__.r(__webpack_exports__);
     });
     var table = $('#tblParticipantes').DataTable({
       "ajax": {
-        "url": "/api/asistencias/evento/1",
+        "url": "/api/asistencias/evento/" + this.persona.event_id,
         "dataSrc": ""
       },
       "drawCallback": function drawCallback(settings) {
@@ -17337,12 +17346,12 @@ __webpack_require__.r(__webpack_exports__);
           var cheack = '';
 
           if (row.asistencia) {
-            cheack = '<button type="button" data-toggle="tooltip" class="btn btn-link btn-warning validar" data-original-title="No asistío">' + '<i class="fa fa-times"></i>' + '</button>';
+            cheack = '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-warning invalidar" data-original-title="No asistío">' + '<i class="fa fa-times"></i>' + '</button>' + '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-danger eliminar" data-original-title="Eliminar">' + '<i class="fa fa-trash"></i>' + '</button>';
           } else {
-            cheack = '<button type="button" data-toggle="tooltip" class="btn btn-link btn-success invalidar" data-original-title="Si asistío">' + '<i class="fa fa-check"></i>' + '</button>';
+            cheack = '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-success validar" data-original-title="Si asistío">' + '<i class="fa fa-check"></i>' + '</button>';
           }
 
-          return '<div class="form-button-action">' + cheack + '<button type="button" data-toggle="tooltip" class="btn btn-link btn-danger eliminar" data-original-title="Eliminar">' + '<i class="fa fa-trash"></i>' + '</button>' + '</div>';
+          return '<div class="form-button-action">' + cheack + '</div>';
         }
       }, {
         "data": "asistencia",
@@ -17367,7 +17376,14 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         "data": "NombreRama"
       }, {
-        "data": "acredita"
+        "data": "acredita",
+        "render": function render(data) {
+          if (data) {
+            return 'SI';
+          } else {
+            return 'NO';
+          }
+        }
       }],
       "scrollX": true,
       "columnDefs": [{
@@ -17385,13 +17401,54 @@ __webpack_require__.r(__webpack_exports__);
     this.acciones("#tblParticipantes tbody", table);
   },
   methods: {
+    acciones: function acciones(tbody, table) {
+      var vue = this; //variable para poder utilizar "this" dentro de JQuery
+
+      $(tbody).on('click', 'button.validar', function () {
+        var data = table.row($(this).parents("tr")).data();
+        vue.limpiarInputs();
+        vue.persona.id = data.id;
+        vue.persona.asistencia = 1;
+        vue.persona.personal_id = data.personal_id;
+        vue.updateAsistente();
+      });
+      $(tbody).on('click', 'button.invalidar', function () {
+        var data = table.row($(this).parents("tr")).data();
+        vue.limpiarInputs();
+        vue.persona.id = data.id;
+        vue.persona.asistencia = 0;
+        vue.persona.personal_id = data.personal_id;
+        vue.updateAsistente();
+      });
+      $(tbody).on('click', 'button.eliminar', function () {
+        var data = table.row($(this).parents("tr")).data();
+        swal({
+          title: "¿Esta seguro de Eliminar?",
+          text: data.NOMBRES + " " + data.APELLIDOS + " será eliminado y no podrá deshacer la acción!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true
+        }).then(function (willDelete) {
+          if (willDelete) {
+            var url = '/api/asistencias/' + data.id;
+            axios["delete"](url).then(function (res) {
+              swal("Poof! Ha eliminado a " + data.NOMBRES + " " + data.APELLIDOS + "!", {
+                icon: "success"
+              });
+              $('#tblParticipantes').DataTable().ajax.reload();
+            })["catch"](function (err) {
+              console.error(err);
+            });
+          }
+        });
+      });
+    },
     crearAsistente: function crearAsistente() {
       var _this = this;
 
       this.limpiarInputs();
       var url = '/api/asistencias';
       axios.post(url, this.persona).then(function (response) {
-        console.log(response);
         _this.nombre = response.data.persona;
         $('#tblParticipantes').DataTable().ajax.reload();
 
@@ -17411,18 +17468,15 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    acciones: function acciones(tbody, table) {
-      $(tbody).on('click', 'button.validar', function () {
-        var data = table.row($(this).parents("tr")).data();
-        console.log(data);
-      });
-      $(tbody).on('click', 'button.invalidar', function () {
-        var data = table.row($(this).parents("tr")).data();
-        console.log(data);
-      });
-      $(tbody).on('click', 'button.eliminar', function () {
-        var data = table.row($(this).parents("tr")).data();
-        console.log(data);
+    updateAsistente: function updateAsistente() {
+      var _this2 = this;
+
+      var url = '/api/asistencias/' + this.persona.id;
+      axios.put(url, this.persona).then(function (response) {
+        var datos = response.data;
+        _this2.update.success = true;
+        _this2.update.messaje = 'Datos actualizados correctamente: ' + datos.persona;
+        $('#tblParticipantes').DataTable().ajax.reload();
       });
     },
     limpiarInputs: function limpiarInputs() {
@@ -17430,6 +17484,8 @@ __webpack_require__.r(__webpack_exports__);
       $('.has-success').removeClass('has-success');
       $('.is-invalid').removeClass('is-invalid');
       this.errors.personal_id = null;
+      this.update.success = false;
+      this.update.messaje = '';
     },
     limpiarDatos: function limpiarDatos() {
       $('#selectParticipantes').val(null).trigger('change');
@@ -17645,6 +17701,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var select2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! select2 */ "./node_modules/select2/dist/js/select2.js");
+/* harmony import */ var select2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(select2__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -17726,22 +17786,189 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      temas: ''
+      tema: {
+        curso_id: null,
+        ponente_id: null,
+        event_id: this.$route.params.id
+      },
+      errors: {
+        curso_id: null,
+        ponente_id: null
+      },
+      curso: '',
+      ponente: '',
+      nuevo: false
     };
+  },
+  mounted: function mounted() {
+    var table = $('#tblCursos').DataTable({
+      "ajax": {
+        "url": "/api/temas/temario/" + this.tema.event_id,
+        "dataSrc": ""
+      },
+      "drawCallback": function drawCallback(settings) {
+        $('[data-toggle="tooltip"]').tooltip({
+          container: 'body'
+        });
+      },
+      "columns": [{
+        "data": "id",
+        "render": function render(data, type, row, meta) {
+          return '<div class="form-button-action">' + '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-danger eliminar" data-original-title="Eliminar">' + '<i class="fa fa-trash"></i>' + '</button>' + '</div>';
+        }
+      }, {
+        "data": "curso"
+      }, {
+        "data": "ponente"
+      }],
+      "scrollX": true,
+      "columnDefs": [{
+        "width": "10%",
+        "targets": 0
+      }, {
+        "searchable": false,
+        "targets": 0
+      }, {
+        "orderable": false,
+        "targets": 0
+      }],
+      "order": [[1, "asc"]]
+    });
+    var vm = this;
+    $('#selectCursos').select2({
+      placeholder: "Seleccione un curso",
+      allowClear: true,
+      ajax: {
+        url: '/api/cursos/listar',
+        dataType: 'json',
+        data: function data(params) {
+          return {
+            term: params.term || '',
+            page: params.page || 1
+          };
+        },
+        processResults: function processResults(data, params) {
+          params.page = params.page || 1;
+          return {
+            results: data.data,
+            pagination: {
+              more: params.page * 10 < data.total
+            }
+          };
+        },
+        cache: true
+      }
+    });
+    $('#selectCursos').on('select2:select', function (e) {
+      var data = e.params.data;
+      vm.tema.curso_id = data.id;
+    });
+    $('#selectPonentes').select2({
+      placeholder: "Seleccione ponente",
+      allowClear: true,
+      ajax: {
+        url: '/api/ponentes/listar',
+        dataType: 'json',
+        data: function data(params) {
+          return {
+            term: params.term || '',
+            page: params.page || 1
+          };
+        },
+        processResults: function processResults(data, params) {
+          params.page = params.page || 1;
+          return {
+            results: data.data,
+            pagination: {
+              more: params.page * 10 < data.total
+            }
+          };
+        },
+        cache: true
+      }
+    });
+    $('#selectPonentes').on('select2:select', function (e) {
+      var data = e.params.data;
+      vm.tema.ponente_id = data.id;
+    });
+    this.acciones("#tblCursos tbody", table);
+  },
+  methods: {
+    crearTema: function crearTema() {
+      var _this = this;
+
+      this.limpiarInputs();
+      var url = '/api/temas';
+      axios.post(url, this.tema).then(function (response) {
+        _this.curso = response.data.curso;
+        _this.ponente = response.data.ponente;
+        $('#tblCursos').DataTable().ajax.reload();
+
+        _this.limpiarDatos();
+      })["catch"](function (error) {
+        if (error.response) {
+          var data = error.response.data.errors;
+
+          if (data.curso_id) {
+            _this.errors.curso_id = data.curso_id[0];
+            $('#selectCursos').addClass('is-invalid');
+            $("#selectCursos").parent('.input-icon').addClass('is-invalid');
+            $("#selectCursos").parents('.form-group').addClass('has-error');
+          }
+
+          if (data.ponente_id) {
+            _this.errors.ponente_id = data.ponente_id[0];
+            $('#selectPonentes').addClass('is-invalid');
+            $("#selectPonentes").parent('.input-icon').addClass('is-invalid');
+            $("#selectPonentes").parents('.form-group').addClass('has-error');
+          }
+
+          console.log(error.response.status);
+        }
+      });
+    },
+    acciones: function acciones(tbody, table) {
+      $(tbody).on('click', 'button.eliminar', function () {
+        var data = table.row($(this).parents("tr")).data();
+        swal({
+          title: "¿Esta seguro de Eliminar?",
+          text: data.curso + " y " + data.ponente + " será eliminado y no podrá deshacer la acción!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true
+        }).then(function (willDelete) {
+          if (willDelete) {
+            var url = '/api/temas/' + data.id;
+            axios["delete"](url).then(function (res) {
+              swal("Poof! Ha eliminado a " + data.curso + " y " + data.ponente + "!", {
+                icon: "success"
+              });
+              $('#tblCursos').DataTable().ajax.reload();
+            })["catch"](function (err) {
+              console.error(err);
+            });
+          }
+        });
+      });
+    },
+    limpiarInputs: function limpiarInputs() {
+      $('.has-error').removeClass('has-error');
+      $('.has-success').removeClass('has-success');
+      $('.is-invalid').removeClass('is-invalid');
+      this.errors.curso_id = null;
+      this.errors.ponente_id = null;
+    },
+    limpiarDatos: function limpiarDatos() {
+      $('#selectCursos').val(null).trigger('change');
+      $('#selectPonentes').val(null).trigger('change');
+      this.tema.curso_id = null;
+      this.tema.ponente_id = null;
+    }
   }
 });
 
@@ -18067,7 +18294,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-// console.log(user);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   methods: {
@@ -98045,6 +98271,28 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { class: [_vm.nuevo ? "col-md-8" : "", "col-12"] }, [
+          _vm.update.success
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "alert alert-success alert-dismissible fade show",
+                  attrs: { role: "alert" }
+                },
+                [
+                  _c("h4", { staticClass: "alert-heading" }, [
+                    _vm._v("Exito!")
+                  ]),
+                  _vm._v(" "),
+                  _c("span", {
+                    domProps: { textContent: _vm._s(_vm.update.messaje) }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(3)
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
               _c("div", { staticClass: "d-flex align-items-center" }, [
@@ -98058,7 +98306,7 @@ var render = function() {
                     staticClass: "btn btn-primary btn-round ml-auto",
                     on: {
                       click: function($event) {
-                        _vm.nuevo = true
+                        _vm.nuevo = !_vm.nuevo
                       }
                     }
                   },
@@ -98072,7 +98320,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(3),
+            _vm._m(4),
             _vm._v(" "),
             _c("div", { staticClass: "card-footer text-muted" })
           ])
@@ -98124,6 +98372,23 @@ var staticRenderFns = [
         [_vm._v("agregar")]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "alert",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   },
   function() {
     var _vm = this
@@ -98248,7 +98513,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "card border-primary" }, [
       _c("div", { staticClass: "card-header" }, [_vm._v("Ponentes")]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body text-primary table-responsive" }, [
+      _c("div", { staticClass: "card-body table-responsive" }, [
         _c(
           "table",
           {
@@ -98405,248 +98670,219 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _vm.curso
+      ? _c(
+          "div",
+          {
+            staticClass: "alert alert-success alert-dismissible fade show",
+            attrs: { role: "alert" }
+          },
+          [
+            _c("h4", { staticClass: "alert-heading" }, [_vm._v("Exito!")]),
+            _vm._v("\n        se ha resgitrado a "),
+            _c("strong", { domProps: { textContent: _vm._s(_vm.curso) } }),
+            _vm._v(" y "),
+            _c("strong", { domProps: { textContent: _vm._s(_vm.ponente) } }),
+            _vm._v(" "),
+            _vm._m(0)
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.nuevo,
+                expression: "nuevo"
+              }
+            ],
+            staticClass: "col-xs-12 col-md-4"
+          },
+          [
+            _c("div", { staticClass: "card" }, [
+              _c(
+                "form",
+                {
+                  attrs: { id: "formTemas" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.crearTemas($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Cursos")]),
+                    _vm._v(" "),
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm.errors.curso_id
+                      ? _c("h5", {
+                          staticClass: "form-text text-danger",
+                          domProps: { textContent: _vm._s(_vm.errors.curso_id) }
+                        })
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Ponentes")]),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _vm.errors.ponente_id
+                      ? _c("h5", {
+                          staticClass: "form-text text-danger",
+                          domProps: {
+                            textContent: _vm._s(_vm.errors.ponente_id)
+                          }
+                        })
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(3)
+                ]
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { class: [_vm.nuevo ? "col-md-8" : "", "col-12"] }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _c("div", { staticClass: "d-flex align-items-center" }, [
+                _c("h4", { staticClass: "card-title" }, [
+                  _vm._v("Lista de Cursos")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary btn-round ml-auto",
+                    on: {
+                      click: function($event) {
+                        _vm.nuevo = !_vm.nuevo
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-plus" }),
+                    _vm._v(
+                      "\n                                Agregar\n                            "
+                    )
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(4),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-footer text-muted" })
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "card full-height" }, [
-        _c("div", { staticClass: "card-header" }, [
-          _c("div", { staticClass: "card-head-row" }, [
-            _c("div", { staticClass: "card-title" }, [
-              _vm._v("Support Tickets")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-tools" }, [
-              _c(
-                "ul",
-                {
-                  staticClass:
-                    "nav nav-pills nav-secondary nav-pills-no-bd nav-sm",
-                  attrs: { id: "pills-tab", role: "tablist" }
-                },
-                [
-                  _c("li", { staticClass: "nav-item" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "nav-link",
-                        attrs: {
-                          id: "pills-today",
-                          "data-toggle": "pill",
-                          href: "#pills-today",
-                          role: "tab",
-                          "aria-selected": "true"
-                        }
-                      },
-                      [_vm._v("Today")]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("li", { staticClass: "nav-item" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "nav-link active",
-                        attrs: {
-                          id: "pills-week",
-                          "data-toggle": "pill",
-                          href: "#pills-week",
-                          role: "tab",
-                          "aria-selected": "false"
-                        }
-                      },
-                      [_vm._v("Week")]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("li", { staticClass: "nav-item" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "nav-link",
-                        attrs: {
-                          id: "pills-month",
-                          "data-toggle": "pill",
-                          href: "#pills-month",
-                          role: "tab",
-                          "aria-selected": "false"
-                        }
-                      },
-                      [_vm._v("Month")]
-                    )
-                  ])
-                ]
-              )
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "alert",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "select",
+      {
+        staticClass: "form-control",
+        staticStyle: { width: "100%" },
+        attrs: { id: "selectCursos", required: "" }
+      },
+      [_c("option")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "select",
+      {
+        staticClass: "form-control",
+        staticStyle: { width: "100%" },
+        attrs: { id: "selectPonentes", required: "" }
+      },
+      [_c("option")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer text-muted" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary btn-block", attrs: { type: "submit" } },
+        [_vm._v("agregar")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body table-responsive" }, [
+      _c(
+        "table",
+        {
+          staticClass: "display table table-striped",
+          staticStyle: { width: "100%" },
+          attrs: { id: "tblCursos" }
+        },
+        [
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v("Acciones")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Curso")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Ponente")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("tfoot", [
+            _c("tr", [
+              _c("th", [_vm._v("Acciones")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Curso")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Ponente")])
             ])
           ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "d-flex" }, [
-            _c("div", { staticClass: "avatar avatar-online" }, [
-              _c(
-                "span",
-                {
-                  staticClass:
-                    "avatar-title rounded-circle border border-white bg-info"
-                },
-                [_vm._v("J")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "flex-1 ml-3 pt-1" }, [
-              _c("h6", { staticClass: "text-uppercase fw-bold mb-1" }, [
-                _vm._v("Joko Subianto "),
-                _c("span", { staticClass: "text-warning pl-3" }, [
-                  _vm._v("pending")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "text-muted" }, [
-                _vm._v(
-                  "I am facing some trouble with my viewport. When i start my"
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "float-right pt-1" }, [
-              _c("small", { staticClass: "text-muted" }, [_vm._v("8:40 PM")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "separator-dashed" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "d-flex" }, [
-            _c("div", { staticClass: "avatar avatar-offline" }, [
-              _c(
-                "span",
-                {
-                  staticClass:
-                    "avatar-title rounded-circle border border-white bg-secondary"
-                },
-                [_vm._v("P")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "flex-1 ml-3 pt-1" }, [
-              _c("h6", { staticClass: "text-uppercase fw-bold mb-1" }, [
-                _vm._v("Prabowo Widodo "),
-                _c("span", { staticClass: "text-success pl-3" }, [
-                  _vm._v("open")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "text-muted" }, [
-                _vm._v("I have some query regarding the license issue.")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "float-right pt-1" }, [
-              _c("small", { staticClass: "text-muted" }, [_vm._v("1 Day Ago")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "separator-dashed" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "d-flex" }, [
-            _c("div", { staticClass: "avatar avatar-away" }, [
-              _c(
-                "span",
-                {
-                  staticClass:
-                    "avatar-title rounded-circle border border-white bg-danger"
-                },
-                [_vm._v("L")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "flex-1 ml-3 pt-1" }, [
-              _c("h6", { staticClass: "text-uppercase fw-bold mb-1" }, [
-                _vm._v("Lee Chong Wei "),
-                _c("span", { staticClass: "text-muted pl-3" }, [
-                  _vm._v("closed")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "text-muted" }, [
-                _vm._v("Is there any update plan for RTL version near future?")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "float-right pt-1" }, [
-              _c("small", { staticClass: "text-muted" }, [_vm._v("2 Days Ago")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "separator-dashed" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "d-flex" }, [
-            _c("div", { staticClass: "avatar avatar-offline" }, [
-              _c(
-                "span",
-                {
-                  staticClass:
-                    "avatar-title rounded-circle border border-white bg-secondary"
-                },
-                [_vm._v("P")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "flex-1 ml-3 pt-1" }, [
-              _c("h6", { staticClass: "text-uppercase fw-bold mb-1" }, [
-                _vm._v("Peter Parker "),
-                _c("span", { staticClass: "text-success pl-3" }, [
-                  _vm._v("open")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "text-muted" }, [
-                _vm._v("I have some query regarding the license issue.")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "float-right pt-1" }, [
-              _c("small", { staticClass: "text-muted" }, [_vm._v("2 Day Ago")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "separator-dashed" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "d-flex" }, [
-            _c("div", { staticClass: "avatar avatar-away" }, [
-              _c(
-                "span",
-                {
-                  staticClass:
-                    "avatar-title rounded-circle border border-white bg-danger"
-                },
-                [_vm._v("L")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "flex-1 ml-3 pt-1" }, [
-              _c("h6", { staticClass: "text-uppercase fw-bold mb-1" }, [
-                _vm._v("Logan Paul "),
-                _c("span", { staticClass: "text-muted pl-3" }, [
-                  _vm._v("closed")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "text-muted" }, [
-                _vm._v("Is there any update plan for RTL version near future?")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "float-right pt-1" }, [
-              _c("small", { staticClass: "text-muted" }, [_vm._v("2 Days Ago")])
-            ])
-          ])
-        ])
-      ])
+        ]
+      )
     ])
   }
 ]
@@ -115593,28 +115829,27 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: [{
-    path: '/',
+    path: '/app',
     name: 'agenda',
     component: _views_Agenda__WEBPACK_IMPORTED_MODULE_2__["default"]
   }, {
-    path: '/ponente',
+    path: '/app/ponente',
     name: 'ponente',
-    component: _views_Ponente__WEBPACK_IMPORTED_MODULE_3__["default"] // props: true
-
+    component: _views_Ponente__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
-    path: '/evento/:id',
+    path: '/app/evento/:id',
     name: 'evento',
     component: _views_evento_Evento__WEBPACK_IMPORTED_MODULE_5__["default"],
     props: true
   }, {
-    path: '/plantilla',
-    name: 'personal' // component: eventoC
+    path: '/app/plantilla',
+    name: 'personal' // component: '<div><h1>Plantilla</h1></div>'
 
   }, {
-    path: '*',
+    path: '/app/*',
     component: _views_404__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }] // mode: 'history'
-
+  }],
+  mode: 'history'
 }));
 
 /***/ }),
@@ -115881,8 +116116,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\ensycap\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\ensycap\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\ensycap-web\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\ensycap-web\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

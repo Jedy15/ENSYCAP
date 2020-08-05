@@ -56,4 +56,17 @@ class CursoController extends Controller
         $curso->delete();
         return response()->json(null, 204);
     }
+
+    public function select2(Request $request)
+    {
+       return response()->json(
+            // new CursoCollection(
+            $this->curso
+                ->Select('id','curso as text')
+                ->whereRaw('curso like "%'.$request->term.'%"')
+                ->orderBy('curso', 'asc')
+                ->paginate(10)
+            // )
+        );
+    }
 }

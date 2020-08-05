@@ -58,4 +58,15 @@ class PonenteController extends Controller
         $ponente->delete();
         return response()->json(null, 204);
     }
+
+    public function select2(Request $request)
+    {
+       return response()->json(
+            $this->ponente
+                ->Select('id','ponente as text')
+                ->whereRaw('ponente like "%'.$request->term.'%"')
+                ->orderBy('ponente', 'asc')
+                ->paginate(10)
+        );
+    }
 }

@@ -55,4 +55,13 @@ class TemaController extends Controller
         $tema->delete();
         return response()->json(null, 204);
     }
+
+    public function temario(Request $request)
+    {
+        $tema = $this->tema
+            ->where('event_id', $request->evento)
+            ->get();
+        return response()->json(new TemaCollection($tema));
+    }
+
 }

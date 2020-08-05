@@ -2,7 +2,7 @@
     <div>
         <div class="card border-primary">
             <div class="card-header">Ponentes</div>
-            <div class="card-body text-primary table-responsive">
+            <div class="card-body table-responsive">
                 <table id="myTable" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>

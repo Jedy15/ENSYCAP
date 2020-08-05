@@ -32,7 +32,7 @@ class Asistencia extends FormRequest
                 Rule::unique('asistencias')->where(function ($query) {
                     return $query->where('personal_id', $this->personal_id)
                         ->where('event_id', $this->event_id);
-                })
+                })->ignore($this->id)
             ],
             'constancia'    => 'unique:asistencias'
         ];

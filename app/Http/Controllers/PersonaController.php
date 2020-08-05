@@ -23,6 +23,6 @@ class PersonaController extends Controller
             ->whereRaw('CONCAT(thorario.NTarjeta, " ", tblpersonal.NOMBRES, " ", tblpersonal.APELLIDOS) like "%'.$request->term.'%"')
             ->orderBy('NTarjeta','asc')
             ->paginate(10);
-        return response()->json($persona, 201);
+        return response()->json($persona);
     }
 }

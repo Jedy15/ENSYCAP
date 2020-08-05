@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- <div class="card"> -->
             <div v-if="nombre" class="alert alert-success alert-dismissible fade show" role="alert">
                 <h4 class="alert-heading">Exito!</h4>
                 se ha resgitrado a <strong v-text="nombre"></strong>
@@ -32,11 +31,18 @@
                         </div>
                     </div>
                     <div v-bind:class="[nuevo ? 'col-md-8':'', 'col-12']">
+                        <div v-if="update.success" class="alert alert-success alert-dismissible fade show" role="alert">
+                        <h4 class="alert-heading">Exito!</h4>
+                        <span v-text="update.messaje"></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                         <div class="card">
                             <div class="card-header">
                                <div class="d-flex align-items-center">
                                     <h4 class="card-title">Lista de Participantes</h4>
-                                    <button class="btn btn-primary btn-round ml-auto" v-on:click="nuevo=true">
+                                    <button class="btn btn-primary btn-round ml-auto" @click="nuevo = !nuevo">
                                         <i class="fa fa-plus"></i>
                                         Agregar
                                     </button>
@@ -73,13 +79,11 @@
                             </div>
                             <div class="card-footer text-muted">
                             </div>
-                        </div>
-                       
+                        </div>    
                     </div>                    
                 </div>
                     
-            </div>    
-        <!-- </div> -->
+            </div>
     </div>
     
 </template>
@@ -92,15 +96,20 @@
         data() {
             return {
                 persona:{
+                    id: null,
                     personal_id: null,
+                    asistencia: 0,
                     event_id: this.$route.params.id,
                 },
                 nombre: '',
+                update:{
+                    success: false,
+                    messaje: ''
+                },
                 errors: {
                     personal_id: null,
                 },
-                nuevo: false,
-                claseTabla:''
+                nuevo: false
             }
         },
         mounted(){
@@ -139,7 +148,7 @@
             
             var table = $('#tblParticipantes').DataTable({
                 "ajax": {
-                    "url": "/api/asistencias/evento/1",
+                    "url": "/api/asistencias/evento/"+this.persona.event_id,
                     "dataSrc": ""
                 },
                 "drawCallback": function( settings ) {
@@ -152,19 +161,19 @@
                         "render": function ( data, type, row, meta ) {
                             let cheack = '';
                             if (row.asistencia) {
-                                cheack = '<button type="button" data-toggle="tooltip" class="btn btn-link btn-warning validar" data-original-title="No asistío">'+
+                                cheack = '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-warning invalidar" data-original-title="No asistío">'+
                                     '<i class="fa fa-times"></i>'+
+                                '</button>'+
+                                '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-danger eliminar" data-original-title="Eliminar">'+
+                                    '<i class="fa fa-trash"></i>'+
                                 '</button>';
                             } else {
-                               cheack = '<button type="button" data-toggle="tooltip" class="btn btn-link btn-success invalidar" data-original-title="Si asistío">'+
+                               cheack = '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-success validar" data-original-title="Si asistío">'+
                                     '<i class="fa fa-check"></i>'+
                                 '</button>';
                             }
                             return '<div class="form-button-action">'+
                                 cheack+
-                                '<button type="button" data-toggle="tooltip" class="btn btn-link btn-danger eliminar" data-original-title="Eliminar">'+
-                                    '<i class="fa fa-trash"></i>'+
-                                '</button>'+
                             '</div>';
                         }
                     },
@@ -186,7 +195,15 @@
                     { "data": "Turno" },
                     { "data": "DEPARTAMENTO" },
                     { "data": "NombreRama" },
-                    { "data": "acredita" }
+                    { "data": "acredita",
+                        "render": function (data) { 
+                            if (data) {
+                                return 'SI'
+                            } else {
+                                return 'NO'
+                            }
+                        } 
+                    }
                 ],
 
                 "scrollX": true,
@@ -201,17 +218,62 @@
             });
 
 			this.acciones("#tblParticipantes tbody", table);
-
-
         },
         methods:{
+            acciones: function(tbody, table){
+                let vue = this; //variable para poder utilizar "this" dentro de JQuery
+                $(tbody).on('click', 'button.validar', function() {
+                    let data =table.row($(this).parents("tr")).data();
+                    vue.limpiarInputs();
+
+                    vue.persona.id = data.id;
+                    vue.persona.asistencia = 1;
+                    vue.persona.personal_id = data.personal_id;
+
+                    vue.updateAsistente();
+                });
+                $(tbody).on('click', 'button.invalidar', function() {
+                    let data =table.row($(this).parents("tr")).data();
+                    vue.limpiarInputs();
+
+                    vue.persona.id = data.id;
+                    vue.persona.asistencia = 0;
+                    vue.persona.personal_id = data.personal_id;
+
+                    vue.updateAsistente();
+                });
+                $(tbody).on('click', 'button.eliminar', function() {
+                    var data =table.row($(this).parents("tr")).data();
+                    swal({
+                        title: "¿Esta seguro de Eliminar?",
+                        text: data.NOMBRES+" "+data.APELLIDOS+" será eliminado y no podrá deshacer la acción!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) { 
+                            let url = '/api/asistencias/'+data.id;
+                            axios.delete(url)
+                            .then(res => {
+                                swal("Poof! Ha eliminado a "+data.NOMBRES+" "+data.APELLIDOS+"!", {
+                                        icon: "success",
+                                    });
+                                $('#tblParticipantes').DataTable().ajax.reload();
+                            })
+                            .catch(err => {
+                                console.error(err); 
+                            })                 
+                        }
+                    });
+                });
+            },
             crearAsistente: function () {
                 this.limpiarInputs();               
 
                 let url = '/api/asistencias';
                 axios.post(url, this.persona)
                 .then(response => {
-                    console.log(response);
                     this.nombre = response.data.persona;
                     $('#tblParticipantes').DataTable().ajax.reload();
                     this.limpiarDatos();
@@ -230,21 +292,15 @@
                 });
             },
 
-            acciones: function(tbody, table){
-                $(tbody).on('click', 'button.validar', function() {
-                    var data =table.row($(this).parents("tr")).data();
-                    console.log(data);
-                });
-                $(tbody).on('click', 'button.invalidar', function() {
-                    var data =table.row($(this).parents("tr")).data();
-                    console.log(data);
-
-                });
-                $(tbody).on('click', 'button.eliminar', function() {
-                    var data =table.row($(this).parents("tr")).data();
-                    console.log(data);
-
-                });
+            updateAsistente: function () { 
+                let url = '/api/asistencias/'+this.persona.id
+                axios.put(url, this.persona)
+                .then(response=>{
+                    let datos = response.data;
+                    this.update.success = true;
+                    this.update.messaje = 'Datos actualizados correctamente: '+datos.persona;
+                    $('#tblParticipantes').DataTable().ajax.reload();
+                })
             },
 
             limpiarInputs(){
@@ -252,6 +308,9 @@
                 $('.has-success').removeClass('has-success');
                 $('.is-invalid').removeClass('is-invalid');
                 this.errors.personal_id = null;
+                this.update.success = false;
+                this.update.messaje = '';
+
             },
             limpiarDatos(){
                 $('#selectParticipantes').val(null).trigger('change');

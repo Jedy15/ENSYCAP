@@ -25,4 +25,6 @@ class Tema extends Model
     {
         return $this->belongsTo(Ponente::class);
     }
+
+    public $timestamps = false; //sin fechas de creación y actualización
 }
