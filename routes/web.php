@@ -21,7 +21,13 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'api'], function () {
+
         Route::get('cursos/listar', 'Api\CursoController@select2');
+
+
+        Route::get('personas', 'PersonaController@index');//datos de select2
+        Route::get('personas/operativo', 'PersonaController@tabla');// datos para tabla
+
         Route::get('ponentes/listar', 'Api\PonenteController@select2');
         Route::apiResources([
             'cursos'        => 'Api\CursoController',
@@ -33,7 +39,6 @@ Route::group(['middleware' => ['auth']], function () {
             'asignados'     => 'Api\AsignadoController'
         ]);
 
-        Route::get('personas', 'PersonaController@index');
         Route::get('asistencias/evento/{evento}', 'Api\AsistenciaController@event')
             ->name('asistencias.evento')
             ->where('evento', '[0-9]+');

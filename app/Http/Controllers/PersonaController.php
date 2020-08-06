@@ -25,4 +25,15 @@ class PersonaController extends Controller
             ->paginate(10);
         return response()->json($persona);
     }
+
+    public function tabla()
+    {       
+        $persona = $this->persona
+            ->select('tblpersonal.IdPersonal', 'tblpersonal.NOMBRES', 'tblpersonal.APELLIDOS', 'thorario.NTarjeta', 'DEPARTAMENTO', 'Turno', 'NombreRama', 
+            'PUESTO', 'Telefono', 'Correo')
+            ->operativo()
+            ->orderBy('NTarjeta','asc')
+            ->get();
+        return response()->json($persona);
+    }
 }

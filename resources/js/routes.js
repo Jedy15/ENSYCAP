@@ -5,6 +5,7 @@ import agendaC      from './views/Agenda'
 import ponenteC     from './views/Ponente'
 import notFoundC    from './views/404'
 import eventoC      from './views/evento/Evento'
+import v_personal   from './views/personal'
 
 Vue.use(Router)
 
@@ -29,7 +30,7 @@ export default new Router({
         {
             path: '/app/plantilla',
             name: 'personal',
-            // component: '<div><h1>Plantilla</h1></div>'
+            component: v_personal
         },
         {
             path: '/app/*',

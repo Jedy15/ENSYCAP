@@ -91,7 +91,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content">  
+                <!-- <div class="col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content">  
                     <div class="row flex-xl-nowrap" id="about">
                         <div class="col-12">
                             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -117,7 +117,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
+                @yield('content')
             </div>
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
