@@ -163,13 +163,13 @@
                             if (row.asistencia) {
                                 cheack = '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-warning invalidar" data-original-title="No asistío">'+
                                     '<i class="fa fa-times"></i>'+
-                                '</button>'+
-                                '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-danger eliminar" data-original-title="Eliminar">'+
-                                    '<i class="fa fa-trash"></i>'+
                                 '</button>';
                             } else {
                                cheack = '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-success validar" data-original-title="Si asistío">'+
                                     '<i class="fa fa-check"></i>'+
+                                '</button>'+
+                                '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-danger eliminar" data-original-title="Eliminar">'+
+                                    '<i class="fa fa-trash"></i>'+
                                 '</button>';
                             }
                             return '<div class="form-button-action">'+

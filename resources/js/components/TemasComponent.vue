@@ -11,7 +11,7 @@
             <div class="row">
                 <div v-show="nuevo" class="col-xs-12 col-md-4">
                     <div class="card">
-                        <form v-on:submit.prevent="crearTemas" id="formTemas">
+                        <form v-on:submit.prevent="crearTema" id="formTemas">
                             <div class="form-group">
                                 <label>Cursos</label>
                                 <select class="form-control" id="selectCursos" style="width:100%" required>

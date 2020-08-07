@@ -17346,9 +17346,9 @@ __webpack_require__.r(__webpack_exports__);
           var cheack = '';
 
           if (row.asistencia) {
-            cheack = '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-warning invalidar" data-original-title="No asistío">' + '<i class="fa fa-times"></i>' + '</button>' + '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-danger eliminar" data-original-title="Eliminar">' + '<i class="fa fa-trash"></i>' + '</button>';
+            cheack = '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-warning invalidar" data-original-title="No asistío">' + '<i class="fa fa-times"></i>' + '</button>';
           } else {
-            cheack = '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-success validar" data-original-title="Si asistío">' + '<i class="fa fa-check"></i>' + '</button>';
+            cheack = '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-success validar" data-original-title="Si asistío">' + '<i class="fa fa-check"></i>' + '</button>' + '<button type="button" data-toggle="tooltip" class="btn btn-icon btn-round btn-danger eliminar" data-original-title="Eliminar">' + '<i class="fa fa-trash"></i>' + '</button>';
           }
 
           return '<div class="form-button-action">' + cheack + '</div>';
@@ -98841,7 +98841,7 @@ var render = function() {
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
-                      return _vm.crearTemas($event)
+                      return _vm.crearTema($event)
                     }
                   }
                 },
