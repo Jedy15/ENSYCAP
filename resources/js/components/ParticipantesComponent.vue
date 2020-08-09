@@ -1,89 +1,82 @@
 <template>
     <div>
-            <div v-if="nombre" class="alert alert-success alert-dismissible fade show" role="alert">
-                <h4 class="alert-heading">Exito!</h4>
-                se ha resgitrado a <strong v-text="nombre"></strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div v-show="nuevo" class="col-xs-12 col-md-4">
-                        <div class="card">
-                            <form v-on:submit.prevent="crearAsistente" id="formParticipante">
-                                <!-- <div class="card-body"> -->
-                                    <div class="form-group">
-                                        <label>Personal</label>
-                                        <select class="form-control" id="selectParticipantes" style="width:100%" required>
-                                            <option></option>
-                                        </select>
-                                        <h5 class="form-text text-danger"
-                                            v-if="errors.personal_id"
-                                            v-text="errors.personal_id">
-                                        </h5>
-                                    </div>
-                                <!-- </div> -->
-                                <div class="card-footer text-muted">
-                                    <button type="submit" class="btn btn-primary btn-block">agregar</button>
+        <div class="card-body">
+            <div class="row">
+                <div v-show="nuevo" class="col-xs-12 col-md-4">
+                    <div class="card">
+                        <form v-on:submit.prevent="crearAsistente" id="formParticipante">
+                            <!-- <div class="card-body"> -->
+                                <div class="form-group">
+                                    <label>Personal</label>
+                                    <select class="form-control" id="selectParticipantes" style="width:100%" required>
+                                        <option></option>
+                                    </select>
+                                    <h5 class="form-text text-danger"
+                                        v-if="errors.personal_id"
+                                        v-text="errors.personal_id">
+                                    </h5>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div v-bind:class="[nuevo ? 'col-md-8':'', 'col-12']">
-                        <div v-if="update.success" class="alert alert-success alert-dismissible fade show" role="alert">
-                        <h4 class="alert-heading">Exito!</h4>
-                        <span v-text="update.messaje"></span>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                        <div class="card">
-                            <div class="card-header">
-                               <div class="d-flex align-items-center">
-                                    <h4 class="card-title">Lista de Participantes</h4>
-                                    <button class="btn btn-primary btn-round ml-auto" @click="nuevo = !nuevo">
-                                        <i class="fa fa-plus"></i>
-                                        Agregar
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body table-responsive">
-                                <table id="tblParticipantes" class="display table table-striped" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Acciones</th>
-                                            <th>Asistencia</th>
-                                            <th>Tarjeta</th>
-                                            <th>Nombre</th>
-                                            <th>Turno</th>
-                                            <th>Departamento</th>
-                                            <th>Perfil</th>
-                                            <th>Acreditado</th>
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tfoot>
-                                        <tr>
-                                            <th>Acciones</th>
-                                            <th>Asistencia</th>
-                                            <th>Tarjeta</th>
-                                            <th>Nombre</th>
-                                            <th>Turno</th>
-                                            <th>Departamento</th>
-                                            <th>Perfil</th>
-                                            <th>Acreditado</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>   
-                            </div>
+                            <!-- </div> -->
                             <div class="card-footer text-muted">
+                                <button type="submit" class="btn btn-primary btn-block">agregar</button>
                             </div>
-                        </div>    
-                    </div>                    
+                        </form>
+                    </div>
                 </div>
-                    
+                <div v-bind:class="[nuevo ? 'col-md-8':'', 'col-12']">
+                    <div v-if="update.success" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <h4 class="alert-heading">Exito!</h4>
+                    <span v-text="update.messaje"></span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <h4 class="card-title">Lista de Participantes</h4>
+                                <button class="btn btn-primary btn-round ml-auto" @click="nuevo = !nuevo">
+                                    <i class="fa fa-plus"></i>
+                                    Agregar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table id="tblParticipantes" class="display table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Acciones</th>
+                                        <th>Asistencia</th>
+                                        <th>Tarjeta</th>
+                                        <th>Nombre</th>
+                                        <th>Turno</th>
+                                        <th>Departamento</th>
+                                        <th>Perfil</th>
+                                        <th>Acreditado</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tfoot>
+                                    <tr>
+                                        <th>Acciones</th>
+                                        <th>Asistencia</th>
+                                        <th>Tarjeta</th>
+                                        <th>Nombre</th>
+                                        <th>Turno</th>
+                                        <th>Departamento</th>
+                                        <th>Perfil</th>
+                                        <th>Acreditado</th>
+                                    </tr>
+                                </tfoot>
+                            </table>   
+                        </div>
+                        <div class="card-footer text-muted">
+                        </div>
+                    </div>    
+                </div>                    
             </div>
+                
+        </div>        
     </div>
     
 </template>
@@ -91,6 +84,7 @@
 <script>
     import datables from "datatables.net-bs4";
     import select2  from "select2";
+
     export default {
 
         data() {
@@ -114,6 +108,7 @@
         },
         mounted(){
             let vm = this;
+
             $('#selectParticipantes').select2({
                 placeholder: "Seleccione una persona o ingrese caracter",
                 allowClear: true,
@@ -217,6 +212,7 @@
                 "order": [[ 2, "asc" ]]
             });
 
+
 			this.acciones("#tblParticipantes tbody", table);
         },
         methods:{
@@ -276,6 +272,12 @@
                 .then(response => {
                     this.nombre = response.data.persona;
                     $('#tblParticipantes').DataTable().ajax.reload();
+                    Vue.toasted.success( 'Exito! se ha registrado a '+this.nombre,{
+                        icon: 'check',
+                        theme: "bubble", 
+                        position: "top-left", 
+                        duration : 5000
+                    })
                     this.limpiarDatos();
                 })
                 .catch(error => {

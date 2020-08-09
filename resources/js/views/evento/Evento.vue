@@ -57,25 +57,25 @@
 </template>
 
 <script>
-export default {
-    data() {
-        return {
-            evento: '',
-        }
-    },
-    props: ['id'],
+    export default {
+        data() {
+            return {
+                evento: '',
+            }
+        },
+        props: ['id'],
 
-    created: function () {
-        this.getEvento();
-    },
+        created: function () {
+            this.getEvento();
+        },
 
-    methods:{ 
-        getEvento() { 
-            let url = '/api/events/'+this.id;
-            axios.get(url)
-            .then( data => (this.evento = data.data))
-            .catch(error => console.log(error))
+        methods:{ 
+            getEvento() { 
+                let url = '/api/events/'+this.id;
+                axios.get(url)
+                .then( data => (this.evento = data.data))
+                .catch(error => console.log(error))
+            }
         }
     }
-}
 </script>

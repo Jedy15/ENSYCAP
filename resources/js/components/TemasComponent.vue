@@ -1,43 +1,38 @@
 <template>
     <div>
-        <div v-if="curso" class="alert alert-success alert-dismissible fade show" role="alert">
-            <h4 class="alert-heading">Exito!</h4>
-            se ha resgitrado a <strong v-text="curso"></strong> y <strong v-text="ponente"></strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
         <div class="card-body">
             <div class="row">
-                <div v-show="nuevo" class="col-xs-12 col-md-4">
-                    <div class="card">
-                        <form v-on:submit.prevent="crearTema" id="formTemas">
-                            <div class="form-group">
-                                <label>Cursos</label>
-                                <select class="form-control" id="selectCursos" style="width:100%" required>
-                                    <option></option>
-                                </select>
-                                <h5 class="form-text text-danger"
-                                    v-if="errors.curso_id"
-                                    v-text="errors.curso_id">
-                                </h5>
-                            </div>
-                            <div class="form-group">
-                                <label>Ponentes</label>
-                                <select class="form-control" id="selectPonentes" style="width:100%" required>
-                                    <option></option>
-                                </select>
-                                <h5 class="form-text text-danger"
-                                    v-if="errors.ponente_id"
-                                    v-text="errors.ponente_id">
-                                </h5>
-                            </div>
-                            <div class="card-footer text-muted">
-                                <button type="submit" class="btn btn-primary btn-block">agregar</button>
-                            </div>
-                        </form>
+                <transition name="slide-fade">
+                    <div v-show="nuevo" class="col-xs-12 col-md-4">
+                        <div class="card card-info bg-info-gradient">                        
+                            <form v-on:submit.prevent="crearTema" id="formTemas">
+                                <div class="form-group">
+                                    <label text-white>Cursos</label>
+                                    <select class="form-control" id="selectCursos" style="width:100%" required>
+                                        <option></option>
+                                    </select>
+                                    <h5 class="form-text text-danger"
+                                        v-if="errors.curso_id"
+                                        v-text="errors.curso_id">
+                                    </h5>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ponentes</label>
+                                    <select class="form-control" id="selectPonentes" style="width:100%" required>
+                                        <option></option>
+                                    </select>
+                                    <h5 class="form-text text-danger"
+                                        v-if="errors.ponente_id"
+                                        v-text="errors.ponente_id">
+                                    </h5>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="submit" class="btn btn-outline-light btn-round btn-block">agregar</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>   
+                </transition>
                 <div v-bind:class="[nuevo ? 'col-md-8':'', 'col-12']">
                     <div class="card">
                         <div class="card-header">
@@ -70,8 +65,7 @@
                         </div>
                         <div class="card-footer text-muted">
                         </div>
-                    </div>
-                    
+                    </div>                    
                 </div>
             </div>
                 
@@ -283,3 +277,24 @@
         }
     }
 </script>
+
+<style lang="scss">
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0
+    }
+
+    .slide-fade-enter-active {
+        transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+    /* .slide-fade-leave-active below version 2.1.8 */ {
+        transform: translateX(10px);
+        opacity: 0;
+    }
+</style>

@@ -32,10 +32,10 @@
         "@fullcalendar/list": "^4.4.2",
         "@fullcalendar/timegrid": "^4.4.2",
         "@fullcalendar/vue": "^4.4.2",
-        "datatables.net": "^1.10.21",
         "datatables.net-bs4": "^1.10.21",
         "moment": "^2.27.0",
         "select2": "^4.0.13",
-        "sweetalert": "^2.1.2"
+        "sweetalert": "^2.1.2",
+        "vue-toasted": "^1.1.28"
     }
 }
