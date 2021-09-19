@@ -5,7 +5,7 @@ import agendaC      from './views/Agenda'
 import ponenteC     from './views/Ponente'
 import notFoundC    from './views/404'
 import eventoC      from './views/evento/Evento'
-import v_personal   from './views/personal'
+import v_personal   from './views/Personal'
 
 Vue.use(Router)
 
