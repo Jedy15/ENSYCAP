@@ -16747,30 +16747,33 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-toasted */ "./node_modules/vue-toasted/dist/vue-toasted.min.js");
-/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_toasted__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-toasted */ "./node_modules/vue-toasted/dist/vue-toasted.min.js");
+/* harmony import */ var vue_toasted__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_toasted__WEBPACK_IMPORTED_MODULE_3__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+
+// window.Vue = require('vue');
+
 
 //Vista de Aplicacion
-Vue.component('app', (__webpack_require__(/*! ./layout/AppComponent.vue */ "./resources/js/layout/AppComponent.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('app', (__webpack_require__(/*! ./layout/AppComponent.vue */ "./resources/js/layout/AppComponent.vue")["default"]));
 
 //Componentes
-Vue.component('ponentes', (__webpack_require__(/*! ./components/PonentesComponent.vue */ "./resources/js/components/PonentesComponent.vue")["default"]));
-Vue.component('calendar', (__webpack_require__(/*! ./components/CalendarComponent.vue */ "./resources/js/components/CalendarComponent.vue")["default"]));
-Vue.component('participantes', (__webpack_require__(/*! ./components/ParticipantesComponent.vue */ "./resources/js/components/ParticipantesComponent.vue")["default"]));
-Vue.component('temas', (__webpack_require__(/*! ./components/TemasComponent.vue */ "./resources/js/components/TemasComponent.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('ponentes', (__webpack_require__(/*! ./components/PonentesComponent.vue */ "./resources/js/components/PonentesComponent.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('calendar', (__webpack_require__(/*! ./components/CalendarComponent.vue */ "./resources/js/components/CalendarComponent.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('participantes', (__webpack_require__(/*! ./components/ParticipantesComponent.vue */ "./resources/js/components/ParticipantesComponent.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('temas', (__webpack_require__(/*! ./components/TemasComponent.vue */ "./resources/js/components/TemasComponent.vue")["default"]));
 
 
 
-var app = new Vue({
+var app = new vue__WEBPACK_IMPORTED_MODULE_0__["default"]({
   el: '#app',
-  router: _routes__WEBPACK_IMPORTED_MODULE_0__["default"]
+  router: _routes__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
-Vue.use((vue_toasted__WEBPACK_IMPORTED_MODULE_2___default()), {
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use((vue_toasted__WEBPACK_IMPORTED_MODULE_3___default()), {
   iconPack: 'fontawesome' // set your iconPack, defaults to material. material|fontawesome|custom-class
 });
 
